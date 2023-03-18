@@ -10,11 +10,11 @@ import LandingPage from './components/LandingPage';
 import Choose from './components/Choose/Choose';
 import Spaces from './components/Spaces';
 import Grievances from './components/Grievances/Grievances.js';
-import CreateGrievance from './components/CreateGrievance';
+import CreateGrievance from './components/Grievances/CreateGrievance';//Changed
 import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
-import CreateOrg from './components/Choose/CreateOrg';
+import CreateOrg from './components/Choose/CreateOrg';//Changed
 import OrgInfo from './components/OrgInfo';
 
 // Components
