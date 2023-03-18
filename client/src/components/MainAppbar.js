@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import CommentIcon from '@mui/icons-material/Comment';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import Groups2Icon from '@mui/icons-material/Groups2';
 
 import { CustomSwitcherGroup, CustomSwitcherButton } from './CustomSwitcher';
 
@@ -19,16 +18,18 @@ function MainAppbar({ mode, themeChange }) {
     const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = useState(null);
+    const [hovered, setHovered] = useState(false);
 
     const [selected, setSelected] = useState(
-        window.localStorage.getItem('grievancesAppLastPage') || 'stage'
+        window.localStorage.getItem('grievancesAppLastPage') || 'spaces'
     );
 
     // Array of menu items
     const menuItems = [
         {
             text: 'Spaces',
-            icon: <AccountBoxIcon />,
+            icon: <Groups2Icon />,
+            value: 'Spaces',
             onClick: () => {
                 handleMenuClose();
                 navigate('/spaces');
@@ -37,6 +38,7 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Grievances',
             icon: <LibraryBooksIcon />,
+            value: 'Grievances',
             onClick: () => {
                 handleMenuClose();
                 navigate('/grievances');
@@ -45,6 +47,7 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Chat',
             icon: <CommentIcon />,
+            value: 'Chat',
             onClick: () => {
                 handleMenuClose();
                 navigate('/chat');
@@ -53,6 +56,7 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Reports',
             icon: <PersonSearchIcon />,
+            value: 'Reports',
             onClick: () => {
                 handleMenuClose();
                 navigate('/reports');
@@ -111,33 +115,22 @@ function MainAppbar({ mode, themeChange }) {
                     {/* Map over the menu */}
                     {menuItems.map((item) => (
                         <CustomSwitcherButton
+                            key={item.text}
                             value={item.text}
                             selected={selected === item.text.toLowerCase()}
                             onClick={() => handleNavigation(item.text.toLowerCase())}
+                            onMouseEnter={() => setHovered(item.value)}
+                            onMouseLeave={() => setHovered(false)}
                         >
-                            {item.icon} {item.text}
+                            {item.icon}
+                            &nbsp;
+                            {hovered === item.value || selected === item.text.toLowerCase() ? item.text : ''}
                         </CustomSwitcherButton>
                     ))}
                 </CustomSwitcherGroup>
 
-                {/* <IconButton onClick={handleMenuClick}>
-                        <Avatar
-                            // alt={currentUser.name.charAt(0).toUpperCase()}
-                            // src={currentUser.photoURL}
-                            sx={{
-                                bgcolor: mode === 'light' ? deepDark : light,
-                                color: mode === 'light' ? light : deepDark,
-                                height: 45,
-                                width: 45,
-                                border: '2px solid',
-                            }}
-                        >
-                            {currentUser.name.charAt(0).toUpperCase()}
-                        </Avatar>
-                    </IconButton> */}
-
             </Box>
-            {/* End of Switcherx */}
+            {/* End of Switcher */}
         </Box> // End of Container
     );
 }

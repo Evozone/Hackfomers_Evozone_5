@@ -141,7 +141,8 @@ export default function App() {
                 />
             </Routes>
 
-            {isSignedIn ? (
+            {/* Don't show if on Choose page */}
+            {isSignedIn && window.location.pathname != '/choose' ? (
                 <MainAppbar
                     {...{
                         themeChange,
@@ -149,6 +150,7 @@ export default function App() {
                     }}
                 />
             ) : null}
+
         </ThemeProvider>
     );
 }

@@ -10,12 +10,13 @@ export const CustomSwitcherGroup = styled(ToggleButtonGroup)(({ theme }) => ({
         margin: 0,
         border: 0,
         borderRadius: '50px',
-        padding: '5px',
-        width: '130px',
+        padding: '0.5rem 1rem',
+        width: 'auto',
         '&:first-of-type, &:not(:first-of-type)': {
             borderRadius: '50px',
-            border: `6px solid ${theme.palette.mode === 'light' ? 'transparent' : 'black'}`,
+            border: `6px solid ${theme.palette.mode === 'light' ? 'white' : 'black'}`,
         },
+        transition: 'all 0.2s ease-in-out',
     },
     '& .MuiToggleButton-root': {
         outline: 'none',
