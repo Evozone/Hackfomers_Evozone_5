@@ -51,6 +51,7 @@ export default function Grievances({ themeChange, mode }) {
                         border: 'none',
                         borderRadius: '50px',
                         '&.Mui-selected': {
+                            color: mode === 'light' ? 'white' : 'black',
                             background: mode === 'light' ? lMode4 : dMode4,
                             '&hover': {
                                 background: mode === 'light' ? lMode2 : dMode2,
