@@ -111,7 +111,7 @@ export default function LandingPage({ themeChange, mode }) {
                                 fontSize: '3rem',
                             }}
                         >
-                            Grievances Website
+                            Resolva
                         </h1>
                         <Typography
                             sx={{

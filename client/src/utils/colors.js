@@ -14,3 +14,5 @@ export const dMode3 = '#1976d2';
 export const dMode4 = '#1e88e5';
 export const dMode5 = '#2196f3';
 export const dMode6 = '#64b5f6';
+
+export const richBlue = '#3050e3';
