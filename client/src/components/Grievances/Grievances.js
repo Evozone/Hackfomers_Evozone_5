@@ -7,6 +7,11 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 
+
+// MUI Icons
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import CreateIcon from '@mui/icons-material/Create';
+
 // Components
 import BarredPage from '../BarredPage';
 import Loading from '../Loading';
@@ -39,14 +44,17 @@ export default function Grievances({ themeChange, mode }) {
                 aria-label="grievance view"
                 sx={{
                     mt: 3,
-                    background: mode === 'light' ? lMode4 : dMode4,
+                    background: mode === 'light' ? lMode1 : dMode1,
                     borderRadius: '50px',
+                    border: `2px solid ${mode === 'light' ? lMode3 : dMode3}`,
                     '& .MuiToggleButton-root': {
                         border: 'none',
                         borderRadius: '50px',
                         '&.Mui-selected': {
-                            background: mode === 'light' ? lMode5 : dMode5,
-                            color: mode === 'light' ? 'white' : 'black',
+                            background: mode === 'light' ? lMode4 : dMode4,
+                            '&hover': {
+                                background: mode === 'light' ? lMode2 : dMode2,
+                            }
                         },
                     },
                 }}
@@ -56,9 +64,11 @@ export default function Grievances({ themeChange, mode }) {
                         textTransform='none'
                         sx={{
                             font: '500 1rem Work Sans, sans-serif',
+                            display: 'flex',
+                            alignItems: 'center',
                         }}
                     >
-                        Create Grievance
+                        <CreateIcon/> &nbsp; Create Grievance
                     </Typography>
 
                 </ToggleButton>
@@ -67,9 +77,11 @@ export default function Grievances({ themeChange, mode }) {
                         textTransform='none'
                         sx={{
                             font: '500 1rem Work Sans, sans-serif',
+                            display: 'flex',
+                            alignItems: 'center',
                         }}
                     >
-                        Grievance List
+                        <FormatListBulletedIcon/> &nbsp; Grievance List
                     </Typography>
                 </ToggleButton>
             </ToggleButtonGroup>

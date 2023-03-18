@@ -14,7 +14,7 @@ import CreateGrievance from './components/Grievances/CreateGrievance';
 import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
-import CreateOrg from './components/Choose/CreateOrg';
+import CreateOrg from './components/Choose/CreateOrg';//Changed
 import OrgInfo from './components/OrgInfo';
 
 // Components
