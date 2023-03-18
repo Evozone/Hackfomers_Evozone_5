@@ -7,6 +7,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import CommentIcon from '@mui/icons-material/Comment';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Groups2Icon from '@mui/icons-material/Groups2';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 
 // Custom Components
 import { CustomSwitcherGroup, CustomSwitcherButton } from './CustomSwitcher';
@@ -75,6 +76,15 @@ function MainAppbar({ mode, themeChange }) {
             onClick: () => {
                 handleMenuClose();
                 navigate('/reports');
+            },
+        },
+        {
+            text: 'Oraganization',
+            icon: <ApartmentIcon />,
+            value: 'Oraganization',
+            onClick: () => {
+                handleMenuClose();
+                navigate('/organization');
             },
         },
     ];

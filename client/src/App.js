@@ -15,6 +15,7 @@ import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
 import CreateOrg from './components/Choose/CreateOrg';
+import Organization from './components/Organization';
 
 // Actions
 import { signInAction } from './actions/actions';
@@ -165,6 +166,12 @@ export default function App() {
                 <Route
                     path='/reports'
                     element={<Reports themeChange={themeChange} mode={mode} />}
+                />
+
+                {/* Organization page */}
+                <Route
+                    path='/organization/:id'
+                    element={<Organization themeChange={ themeChange } mode = { mode } />} 
                 />
             </Routes>
 
