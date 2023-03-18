@@ -8,6 +8,10 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Divider from '@mui/material/Divider';
+import Avatar from '@mui/material/Avatar';
 
 import {
     lMode1,
@@ -24,12 +28,17 @@ import {
     dMode6,
 } from '../utils/colors';
 
-
 export default function OrgInfo({ themeChange, mode }) {
     const dispatch = useDispatch();
 
-    const [orgInfo, setOrgInfo] = useState(null);
+    const [copySuccess, setCopySuccess] = useState(false);
 
+    const handleCopyCode = () => {
+        navigator.clipboard.writeText(orgInfo._id);
+        setCopySuccess(true);
+    };
+
+    const [orgInfo, setOrgInfo] = useState(null);
     useEffect(() => {
         window.localStorage.setItem('hackathonAppLastPage', 'organization');
         const getOrgInfo = async () => {
@@ -106,6 +115,7 @@ export default function OrgInfo({ themeChange, mode }) {
                             </Typography>
 
                             {/* Create a Box with 2 columns */}
+
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -121,6 +131,65 @@ export default function OrgInfo({ themeChange, mode }) {
                                     }}
                                 >
                                     <Typography
+                                        sx={{
+                                            wordBreak: 'break-all',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '10px',
+                                        }}
+                                    >
+                                        {orgInfo?.createdBy && (
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    justifyContent:
+                                                        'flex-start',
+                                                    alignItems: 'center',
+                                                    marginTop: '0.5rem',
+                                                    px: 2,
+                                                }}
+                                            >
+                                                <Avatar
+                                                    alt={orgInfo.createdBy.name}
+                                                    src={
+                                                        orgInfo.createdBy
+                                                            .avatarURL
+                                                    }
+                                                    sx={{
+                                                        marginRight: '0.5rem',
+                                                        backgroundColor:
+                                                            'white',
+                                                    }}
+                                                />
+
+                                                <Divider
+                                                    orientation='vertical'
+                                                    sx={{
+                                                        height: '2rem',
+                                                        mr: 1,
+                                                        backgroundColor:
+                                                            mode === 'light'
+                                                                ? lMode3
+                                                                : dMode3,
+                                                    }}
+                                                />
+
+                                                <Typography
+                                                    variant='subtitle1'
+                                                    sx={{
+                                                        color:
+                                                            mode === 'light'
+                                                                ? lMode6
+                                                                : dMode6,
+                                                    }}
+                                                >
+                                                    {grievance.createdBy.name}
+                                                </Typography>
+                                            </Box>
+                                        )}
+                                    </Typography>
+                                    <Typography
                                         sx={{ wordBreak: 'break-all' }}
                                         gutterBottom
                                         variant='h6'
@@ -130,21 +199,35 @@ export default function OrgInfo({ themeChange, mode }) {
                                     </Typography>
                                     <Typography>
                                         <b>Organization Code:</b> {orgInfo._id}
+                                        <Button
+                                            sx={{
+                                                width: '20px',
+                                            }}
+                                            variant='outlined'
+                                            onClick={handleCopyCode}
+                                        >
+                                            <ContentCopyIcon />
+                                        </Button>
                                     </Typography>
                                     <Typography>
                                         <b>Website:</b> {orgInfo.website}
                                     </Typography>
                                 </Box>
-                                <Box>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        px: '100px',
+                                    }}
+                                >
                                     <Typography>
                                         <b> Admins :</b> {orgInfo.admin?.length}
                                     </Typography>
                                     <Typography>
                                         <b> Grievances :</b>{' '}
                                         {orgInfo.grievances?.length}
-                                    </Typography>
-                                    <Typography>
-                                        <b>Founder :</b> {orgInfo.createdBy.name}
                                     </Typography>
                                 </Box>
                             </Box>
