@@ -4,8 +4,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 export default function Grievance() {
+
     const [grievance, setGrievance] = useState({});
     const id = window.location.pathname.split('/')[2];
+
     useEffect(() => {
         const getGrievanceById = async () => {
             try {
