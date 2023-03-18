@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 
 import BarredPage from './BarredPage';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -28,7 +27,9 @@ import { useDispatch } from 'react-redux';
 
 export default function OrgInfo({ themeChange, mode }) {
     const dispatch = useDispatch();
+
     const [orgInfo, setOrgInfo] = useState(null);
+
     useEffect(() => {
         window.localStorage.setItem('hackathonAppLastPage', 'organization');
         const getOrgInfo = async () => {
@@ -46,115 +47,111 @@ export default function OrgInfo({ themeChange, mode }) {
 
     return (
         <BarredPage mode={mode}>
-            {/* <Box
+            <Box
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
+                    justifyContent: 'flex-start',
                     width: '100%',
+                    p: 2,
                 }}
             >
-                <img
-                    src={orgInfo.avatarURL}
-                    alt='cover'
-                    style={{
-                        width: '100%',
-                        maxHeight: '400px',
-                        objectFit: 'cover',
-                    }}
-                />
-
-                <Box
+                <Typography
                     sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        width: '100%',
-                        minHeight: '100vh',
-                        backgroundColor: mode ? dMode1 : lMode1,
-                        color: mode ? dMode6 : lMode6,
-                        padding: '10px',
+                        margin: '2vh',
+                        color: lMode6,
+                        font: '600 3rem Poppins, sans-serif',
                     }}
-                ></Box>
-            </Box>
-             */}
-            {orgInfo && (
-                <Card>
-                    <CardMedia
-                        component='img'
-                        height='350px'
-                        image={orgInfo.avatarURL}
+                >
+                    This Organization
+                </Typography>
+                {orgInfo && (
+                    <Card
                         sx={{
-                            width: '900px',
-                            objectFit: 'fill',
-                        }}
-                    />
-                    <CardContent
-                        sx={{
-                            p: 4,
+                            width: '90%',
+                            backgroundColor: mode === 'light' ? lMode2 : dMode2,
+                            borderRadius: '20px',
+                            boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.25)',
+
+                            display: 'flex',
+                            flexDirection: 'column',
+
+                            margin: 'auto',
+                            my: '20px',
                         }}
                     >
-                        <Typography
-                            sx={{ textAlign: 'center' }}
-                            gutterBottom
-                            variant='h3'
-                            component='div'
-                        >
-                            {orgInfo.name}
-                        </Typography>
-
-                        {/* <div
-                            className='content'
-                            style={{ wordBreak: 'break-word' }}
-                            dangerouslySetInnerHTML={{ __html: blog?.content }}
-                        /> */}
-
-                        {/* Create a Box with 2 columns */}
-                        <Box
+                        <CardMedia
+                            component='img'
+                            image={orgInfo.avatarURL}
+                            height='250'
                             sx={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'space-around',
-                                alignItems: 'center',
                                 width: '100%',
+                                objectFit: 'cover',
+                            }}
+                        />
+                        <CardContent
+                            sx={{
+                                p: 4,
                             }}
                         >
-                            <Box
+                            <Typography
+                                gutterBottom
+                                component='div'
                                 sx={{
-                                    maxWidth: 'min-content',
+                                    color: mode === 'light' ? lMode1 : dMode1,
+                                    font: '500 2.2rem Poppins, sans-serif',
                                 }}
                             >
-                                <Typography
-                                    sx={{ wordBreak: 'break-all' }}
-                                    gutterBottom
-                                    variant='h6'
-                                    component='div'
+                                {orgInfo.name}
+                            </Typography>
+
+                            {/* Create a Box with 2 columns */}
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    width: '100%',
+                                }}
+                            >
+                                <Box
+                                    sx={{
+                                        maxWidth: 'min-content',
+                                    }}
                                 >
-                                    {orgInfo.about}
-                                </Typography>
-                                <Typography>
-                                    <b>Organization Code:</b> {orgInfo._id}
-                                </Typography>
-                                <Typography>
-                                    <b>Website:</b> {orgInfo.website}
-                                </Typography>
+                                    <Typography
+                                        sx={{ wordBreak: 'break-all' }}
+                                        gutterBottom
+                                        variant='h6'
+                                        component='div'
+                                    >
+                                        {orgInfo.about}
+                                    </Typography>
+                                    <Typography>
+                                        <b>Organization Code:</b> {orgInfo._id}
+                                    </Typography>
+                                    <Typography>
+                                        <b>Website:</b> {orgInfo.website}
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography>
+                                        <b> Admins :</b> {orgInfo.admin?.length}
+                                    </Typography>
+                                    <Typography>
+                                        <b> Grievances :</b>{' '}
+                                        {orgInfo.grievances?.length}
+                                    </Typography>
+                                    <Typography>
+                                        <b>Founder :</b> {orgInfo.createdBy.name}
+                                    </Typography>
+                                </Box>
                             </Box>
-                            <Box>
-                                <Typography>
-                                    <b> Admins :</b> {orgInfo.admin?.length}
-                                </Typography>
-                                <Typography>
-                                    <b> Grievances :</b>{' '}
-                                    {orgInfo.grievances?.length}
-                                </Typography>
-                                <Typography>
-                                    <b>Founder :</b> {orgInfo.createdBy.name}
-                                </Typography>
-                            </Box>
-                        </Box>
-                    </CardContent>
-                </Card>
-            )}
+                        </CardContent>
+                    </Card>
+                )}
+            </Box>
         </BarredPage>
     );
 }

@@ -169,120 +169,118 @@ export default function CreateGrievance({ mode }) {
                 p: 2,
             }}
         >
-            <Box>
+            <Typography
+                sx={{
+                    margin: '2vh',
+                    color: lMode6,
+                    font: '600 3rem Poppins, sans-serif',
+                }}
+            >
+                Create a Grievance
+            </Typography>
+
+            <Box
+                sx={{
+                    p: 5,
+                    m: 1,
+                    borderRadius: '20px',
+                    boxShadow: 'none',
+
+                    backgroundColor: mode === 'light' ? lMode2 : dMode2,
+                }}
+            >
                 <Typography
                     sx={{
-                        margin: '2vh',
-                        color: lMode6,
-                        font: '600 3rem Poppins, sans-serif',
+                        font: '500 1.5rem Work Sans, sans-serif',
+                        color: mode === 'light' ? lMode3 : dMode3,
+                        mb: 4,
                     }}
                 >
-                    Create a Grievance
+                    Fill in the details of your grievance
                 </Typography>
 
-                <Box
-                    sx={{
-                        p: 5,
-                        m: 1,
-                        borderRadius: '20px',
-                        boxShadow: 'none',
+                <StyledTextField
+                    label='Title'
+                    variant='outlined'
+                    fullWidth
+                    name='title'
+                    value={grievance.title}
+                    onChange={handleInputChange}
+                />
 
-                        backgroundColor: mode === 'light' ? lMode2 : dMode2,
-                    }}
-                >
-                    <Typography
-                        sx={{
-                            font: '500 1.5rem Work Sans, sans-serif',
-                            color: mode === 'light' ? lMode3 : dMode3,
-                            mb: 4,
-                        }}
-                    >
-                        Fill in the details of your grievance
-                    </Typography>
+                <StyledTextField
+                    label='Description'
+                    variant='outlined'
+                    fullWidth
+                    name='description'
+                    value={grievance.description}
+                    onChange={handleInputChange}
+                />
 
-                    <StyledTextField
-                        label='Title'
-                        variant='outlined'
-                        fullWidth
-                        name='title'
-                        value={grievance.title}
-                        onChange={handleInputChange}
-                    />
+                <StyledTextField
+                    label='Location'
+                    variant='outlined'
+                    fullWidth
+                    name='location'
+                    value={grievance.location}
+                    onChange={handleInputChange}
+                />
 
-                    <StyledTextField
-                        label='Description'
-                        variant='outlined'
-                        fullWidth
-                        name='description'
-                        value={grievance.description}
-                        onChange={handleInputChange}
-                    />
+                {imageFile && (
+                    <Box sx={{ position: 'relative' }}>
+                        <CancelIcon
+                            sx={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                            }}
+                            cursor='pointer'
+                            onClick={handleCloseImgModal}
+                        />
+                        <img
+                            style={{
+                                objectFit: 'contain',
+                                height: '100%',
+                                maxWidth: '600px',
+                                maxHeight: '400px',
+                                display: 'block',
+                                margin: 'auto',
+                            }}
+                            alt='loading ...'
+                            src={imgLocalURL}
+                        />
+                    </Box>
+                )}
 
-                    <StyledTextField
-                        label='Location'
-                        variant='outlined'
-                        fullWidth
-                        name='location'
-                        value={grievance.location}
-                        onChange={handleInputChange}
-                    />
+                <Divider sx={{ mt: '2px', width: '100%' }} />
 
-                    {imageFile && (
-                        <Box sx={{ position: 'relative' }}>
-                            <CancelIcon
+                <input
+                    accept='image/*'
+                    id='sendImage'
+                    type='file'
+                    style={{ display: 'none' }}
+                    onChange={handleImageInput}
+                />
+                <IconButton sx={{ ml: 1, pb: '4px' }}>
+                    <label htmlFor='sendImage'>
+                        <Tooltip title='Select an Image'>
+                            <ImageIcon
                                 sx={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
+                                    fontSize: '33px',
+                                    cursor: 'pointer',
+                                    color: lMode6,
                                 }}
-                                cursor='pointer'
-                                onClick={handleCloseImgModal}
                             />
-                            <img
-                                style={{
-                                    objectFit: 'contain',
-                                    height: '100%',
-                                    maxWidth: '600px',
-                                    maxHeight: '400px',
-                                    display: 'block',
-                                    margin: 'auto',
-                                }}
-                                alt='loading ...'
-                                src={imgLocalURL}
-                            />
-                        </Box>
-                    )}
+                        </Tooltip>
+                    </label>
+                </IconButton>
 
-                    <Divider sx={{ mt: '2px', width: '100%' }} />
-
-                    <input
-                        accept='image/*'
-                        id='sendImage'
-                        type='file'
-                        style={{ display: 'none' }}
-                        onChange={handleImageInput}
-                    />
-                    <IconButton sx={{ ml: 1, pb: '4px' }}>
-                        <label htmlFor='sendImage'>
-                            <Tooltip title='Select an Image'>
-                                <ImageIcon
-                                    sx={{
-                                        fontSize: '33px',
-                                        cursor: 'pointer',
-                                        color: lMode6,
-                                    }}
-                                />
-                            </Tooltip>
-                        </label>
-                    </IconButton>
-
-                    <ConsistentButton
-                        mode={mode}
-                        title='Create Grievance'
-                        onClick={handleSubmit}
-                    />
-                </Box>
+                <ConsistentButton
+                    mode={mode}
+                    title='Create Grievance'
+                    onClick={handleSubmit}
+                />
             </Box>
-        </Box>
+        </Box >
     );
 }
