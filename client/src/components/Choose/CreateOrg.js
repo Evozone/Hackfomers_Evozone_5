@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import jwtDecode from 'jwt-decode';
+import { useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 
 // MUI Components
@@ -16,9 +16,9 @@ import DashBoardContent from './DashBoardContent'
 import {
     lMode1, lMode2, lMode3, lMode4, lMode5, lMode6, dMode1, dMode2, dMode3, dMode4, dMode5, dMode6
 } from '../../utils/colors'
-import { useSelector } from 'react-redux';
 
-const StyledTextField = styled(TextField)({
+
+export const StyledTextField = styled(TextField)({
     marginBottom: '1rem',
     '& .MuiOutlinedInput-root': {
         '&.Mui-focused fieldset': {

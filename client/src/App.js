@@ -9,7 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import LandingPage from './components/LandingPage';
 import Choose from './components/Choose/Choose';
 import Spaces from './components/Spaces';
-import Grievances from './components/Grievances';
+import Grievances from './components/Grievances/Grievances.js';
 import CreateGrievance from './components/CreateGrievance';
 import Chat from './components/Chat';
 import Reports from './components/Reports';
