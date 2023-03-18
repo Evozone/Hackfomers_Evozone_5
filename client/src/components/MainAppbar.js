@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ListItemText from '@mui/material/ListItemText';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 // Custom Components
@@ -226,7 +226,7 @@ function MainAppbar({ mode, themeChange }) {
                     onClose={handleMenuClose}
                     sx={{
                         '& .MuiPaper-root': {
-                            backgroundColor: mode === 'light' ? lMode1 : dMode1,
+                            backgroundColor: mode === 'light' ? lMode4 : dMode4,
                             boxShadow: 'none',
                             border: `1px solid ${lMode6}`,
                         },
@@ -240,7 +240,7 @@ function MainAppbar({ mode, themeChange }) {
                         {mode === 'light' ? (
                             <DarkModeIcon
                                 sx={{
-                                    color: mode === 'light' ? lMode3 : dMode3,
+                                    color: mode === 'light' ? lMode1 : dMode1,
                                     fontSize: '1.7rem',
                                     ml: -0.5,
                                 }}
@@ -248,7 +248,7 @@ function MainAppbar({ mode, themeChange }) {
                         ) : (
                             <LightModeIcon
                                 sx={{
-                                    color: mode === 'light' ? lMode3 : dMode3,
+                                    color: mode === 'light' ? lMode1 : dMode1,
                                     fontSize: '1.7rem',
                                     ml: -0.5,
                                 }}
@@ -259,18 +259,18 @@ function MainAppbar({ mode, themeChange }) {
                     <MenuItem
                         onClick={() => {
                             handleMenuClose();
-                            navigate('/profile');
+                            navigate('/choose');
                             // setModalVisible(true);
                         }}
                     >
-                        <AccountBoxIcon
+                        <CompareArrowsIcon
                             sx={{
-                                color: mode === 'light' ? lMode3 : dMode3,
+                                color: mode === 'light' ? lMode1 : dMode1,
                                 fontSize: '1.7rem',
                                 ml: -0.5,
                             }}
                         />
-                        <ListItemText sx={{ ml: 1 }} primary='Profile' />
+                        <ListItemText sx={{ ml: 1 }} primary='Change Organization' />
                     </MenuItem>
                     {/* {renderInstallOption()} */}
                     <MenuItem
@@ -281,7 +281,7 @@ function MainAppbar({ mode, themeChange }) {
                     >
                         <LogoutIcon
                             sx={{
-                                color: mode === 'light' ? lMode3 : dMode3,
+                                color: mode === 'light' ? lMode1 : dMode1,
                             }}
                         />
                         <ListItemText sx={{ ml: 1 }} primary='Logout' />

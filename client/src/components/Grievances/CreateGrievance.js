@@ -253,7 +253,7 @@ export default function CreateGrievance({ mode }) {
                 <Typography
                     sx={{
                         font: '500 1.5rem Work Sans, sans-serif',
-                        color: mode === 'light' ? lMode3 : dMode3,
+                        color: mode === 'light' ? 'white' : 'black',
                         mb: 4,
                     }}
                 >

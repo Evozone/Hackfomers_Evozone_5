@@ -53,7 +53,7 @@ export default function Grievances({ themeChange, mode }) {
                         '&.Mui-selected': {
                             color: mode === 'light' ? 'white' : 'black',
                             background: mode === 'light' ? lMode4 : dMode4,
-                            '&hover': {
+                            '&:hover': {
                                 background: mode === 'light' ? lMode2 : dMode2,
                             }
                         },
