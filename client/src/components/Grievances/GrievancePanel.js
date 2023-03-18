@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+// MUI Styles
+import { styled } from '@mui/material/styles';
+
 // MUI Components
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,7 +17,17 @@ import {
     dMode1, dMode2, dMode3, dMode4, dMode5, dMode6,
 } from '../../utils/colors';
 
-export default function GrievancePanel({ key, grievance, mode }) {
+const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
+    color: theme.palette.mode === 'light' ? '#000000' : '#ffffff',
+    '& .MuiCardHeader-title': {
+        font: '500 1.5rem Poppins, sans-serif',
+    },
+    '& .MuiCardHeader-subheader': {
+        font: '400 1rem Work Sans, sans-serif',
+    },
+}));
+
+export default function GrievancePanel({ grievance, mode }) {
     const navigate = useNavigate();
 
     const handleGrievanceClick = () => {
@@ -25,17 +38,16 @@ export default function GrievancePanel({ key, grievance, mode }) {
         <Card
             sx={{
                 minWidth: 275,
-                margin: '5px',
 
                 display: 'flex',
                 justifyContent: 'space-between',
 
-                padding: '10px',
+                px: '30px',
                 margin: '10px',
                 borderRadius: '20px',
                 boxShadow: 'none',
 
-                backgroundColor: mode === 'light' ? lMode2 : lMode6,
+                backgroundColor: mode === 'light' ? lMode2 : dMode2,
                 '&:hover': {
                     cursor: 'pointer',
                     backgroundColor: mode === 'light' ? lMode4 : lMode5,
@@ -44,7 +56,7 @@ export default function GrievancePanel({ key, grievance, mode }) {
             onClick={handleGrievanceClick}
         >
 
-            <CardHeader
+            <StyledCardHeader
                 title={grievance.title}
                 subheader={`${grievance.createdBy.name} | Status : ${grievance.status}`}
             />
@@ -52,26 +64,47 @@ export default function GrievancePanel({ key, grievance, mode }) {
             <CardContent
                 sx={{
                     display: 'flex',
-                    padding: '10px',
-                    margin: '10px',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
                     gap: '50px',
                 }}
             >
+                {/* Divider with thickness */}
+                <Divider
+                    orientation='vertical'
+                    flexItem
+                    sx={{
+                        height: '70px',
+                        width: '1px',
+                        backgroundColor: mode === 'light' ? lMode3 : dMode3,
+                    }}
+                />
+
                 <Typography variant='body2' color='text.secondary'
                     sx={{
                         textAlign: 'center',
-                        font: '400 2rem work-sans, Sans-Serif',
+                        font: '400 1.2rem Work Sans, sans-serif',
                     }}
                 >
                     {grievance.votes} <br></br> Votes
                 </Typography>
 
-                <Divider orientation='vertical' flexItem />
+                {/* Divider with thickness */}
+                <Divider
+                    orientation='vertical'
+                    flexItem
+                    sx={{
+                        height: '70px',
+                        width: '1px',
+                        backgroundColor: mode === 'light' ? lMode3 : dMode3,
+                    }}
+                />
 
                 <Typography variant='body2' color='text.secondary'
                     sx={{
                         textAlign: 'center',
-                        font: '400 2rem work-sans, Sans-Serif',
+                        font: '400 1.2rem Work Sans, sans-serif',
                     }}
                 >
                     {grievance.comments.length} <br></br> Comments
