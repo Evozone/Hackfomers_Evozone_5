@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react';
-import { Button, Typography } from '@mui/material';
-import { Google } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
-
 import { useDispatch } from 'react-redux';
 import { signInAction } from '../actions/actions';
+
+// MUI Components
+import { Button, Typography } from '@mui/material';
+import { Google } from '@mui/icons-material';
+
 
 const GoogleOneTapLogin = () => {
     const navigate = useNavigate();
@@ -21,6 +23,7 @@ const GoogleOneTapLogin = () => {
         const token = response.credential;
         const { sub: uid, email, name, picture: avatarURL } = jwtDecode(token);
         const username = email.split('@')[0];
+        console.log(jwtDecode(token));
 
         const config = {
             headers: {
@@ -45,6 +48,7 @@ const GoogleOneTapLogin = () => {
             )
             .then((result) => {
                 const user = result.data.result;
+                console.log(user);
                 dispatch(
                     signInAction(
                         user._id,

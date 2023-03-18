@@ -1,7 +1,9 @@
+// MUI Components
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { styled } from '@mui/material/styles';
 
+// Colors
 import { lMode1, lMode2, lMode3, lMode4, lMode5, lMode6, dMode1, dMode2, dMode3, dMode4, dMode5, dMode6 } from '../utils/colors';
 
 export const CustomSwitcherGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -14,7 +16,7 @@ export const CustomSwitcherGroup = styled(ToggleButtonGroup)(({ theme }) => ({
         width: 'auto',
         '&:first-of-type, &:not(:first-of-type)': {
             borderRadius: '50px',
-            border: `6px solid ${theme.palette.mode === 'light' ? 'white' : 'black'}`,
+            border: `6px solid ${theme.palette.mode === 'light' ? lMode1 : 'black'}`,
         },
         transition: 'all 0.2s ease-in-out',
     },

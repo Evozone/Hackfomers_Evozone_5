@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// MUI Components
 import Box from '@mui/material/Box';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import CommentIcon from '@mui/icons-material/Comment';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Groups2Icon from '@mui/icons-material/Groups2';
 
+// Custom Components
 import { CustomSwitcherGroup, CustomSwitcherButton } from './CustomSwitcher';
 
+// Colors
 import {
     lMode1, lMode2, lMode3, lMode4, lMode5, lMode6, dMode1, dMode2, dMode3, dMode4, dMode5, dMode6,
 } from '../utils/colors';
@@ -21,7 +25,7 @@ function MainAppbar({ mode, themeChange }) {
     const [hovered, setHovered] = useState(false);
 
     const [selected, setSelected] = useState(
-        window.localStorage.getItem('grievancesAppLastPage') || 'spaces'
+        window.localStorage.getItem('hackathonAppLastPage') || 'spaces'
     );
 
     // Array of menu items
@@ -70,7 +74,7 @@ function MainAppbar({ mode, themeChange }) {
 
     const handleNavigation = (value) => {
         setSelected(value);
-        window.localStorage.setItem('grievancesAppLastPage', value);
+        window.localStorage.setItem('hackathonAppLastPage', value);
         navigate(`/${value}`);
     };
 

@@ -18,7 +18,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case SIGN_IN:
             window.localStorage.setItem(
-                'healthApp',
+                'hackathonApp',
                 JSON.stringify({ dnd: action.payload.token, isSignedIn: true })
             );
             return {
@@ -37,7 +37,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
             };
 
         case SIGN_OUT:
-            window.localStorage.removeItem('healthApp');
+            window.localStorage.removeItem('hackathonApp');
             return {
                 ...state,
                 isSignedIn: false,

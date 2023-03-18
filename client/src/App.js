@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import jwtDecode from 'jwt-decode';
 import CssBaseline from '@mui/material/CssBaseline';
+
+// Routes
 import LandingPage from './components/LandingPage';
-import Choose from './components/Choose';
+import Choose from './components/Choose/Choose';
 import Spaces from './components/Spaces';
 import Grievances from './components/Grievances';
+import CreateGrievance from './components/CreateGrievance';
 import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
+import CreateOrg from './components/Choose/CreateOrg';
 
+// Actions
 import { signInAction } from './actions/actions';
 
 export default function App() {
@@ -22,8 +27,15 @@ export default function App() {
 
     const [mode, setMode] = useState(localTheme ? localTheme : 'light');
 
+    // Where to not show the appbar
+    const noAppbar = [
+        '/',
+        '/choose',
+        '/createOrg',
+    ]
+
     useEffect(() => {
-        const auth = window.localStorage.getItem('healthApp');
+        const auth = window.localStorage.getItem('hackathonApp');
         if (auth) {
             const { dnd } = JSON.parse(auth);
             const {
@@ -80,15 +92,14 @@ export default function App() {
         setMode(updatedTheme);
     };
 
-    const isSignedIn = true;
+    const isSignedIn = useSelector((state) => state.auth.isSignedIn);
 
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
 
             <Routes>
-                {/*  */}
-
+                {/* Landing Page */}
                 <Route
                     path='/'
                     element={
@@ -96,21 +107,31 @@ export default function App() {
                     }
                 />
 
+                {/* Choose Page */}
                 <Route
                     path='/choose'
-                    element={<Choose themeChange={themeChange} mode={mode} />}
+                    element={<Choose mode={mode} />}
                 />
 
+                {/* Create Organization */}
+                <Route
+                    path='/createOrg'
+                    element={<CreateOrg mode={mode} />}
+                />
+
+                {/* Spaces Page */}
                 <Route
                     path='/spaces'
                     element={<Spaces themeChange={themeChange} mode={mode} />}
                 />
 
+                {/* Individual Space Page */}
                 <Route
                     path='/spaces/:id'
                     element={<Spaces themeChange={themeChange} mode={mode} />}
                 />
 
+                {/* Grievances Page */}
                 <Route
                     path='/grievances'
                     element={
@@ -118,6 +139,7 @@ export default function App() {
                     }
                 />
 
+                {/* Individual Grievance Page */}
                 <Route
                     path='/grievances/:id'
                     element={
@@ -125,16 +147,21 @@ export default function App() {
                     }
                 />
 
+                {/* Create Grievance Page */}
+                <Route
+                    path='/createGrievance'
+                    element={
+                        <CreateGrievance themeChange={themeChange} mode={mode} />
+                    }
+                />
+
+                {/* Chat Page */}
                 <Route
                     path='/chat'
                     element={<Chat themeChange={themeChange} mode={mode} />}
                 />
 
-                <Route
-                    path='/chat/:id'
-                    element={<Chat themeChange={themeChange} mode={mode} />}
-                />
-
+                {/* Reports Page */}
                 <Route
                     path='/reports'
                     element={<Reports themeChange={themeChange} mode={mode} />}
@@ -142,7 +169,7 @@ export default function App() {
             </Routes>
 
             {/* Don't show if on Choose page */}
-            {isSignedIn && window.location.pathname != '/choose' ? (
+            {isSignedIn && !noAppbar.includes(window.location.pathname) ? (
                 <MainAppbar
                     {...{
                         themeChange,
