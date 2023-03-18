@@ -102,14 +102,13 @@ export default function CreateOrg({ mode }) {
                     backgroundRepeat: 'no-repeat',
                     display: 'flex',
                     justifyContent: 'center',
-
                 }}
             >
                 <Typography sx={{
                     margin: '5vh',
                     color: 'white',
                     fontSize: '5rem',
-                    font: '700 5rem Poppins, sans-serif',
+                    font: '700 4rem Poppins, sans-serif',
                 }}>Create an Organization</Typography>
 
             </Box>
@@ -123,7 +122,8 @@ export default function CreateOrg({ mode }) {
                         width: '100%',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        px: 30,
+                        paddingLeft: '20px',
+                        paddingRight: '20px',
                     }}
                 >
                     <Typography
