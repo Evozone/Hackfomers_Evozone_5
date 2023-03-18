@@ -26,7 +26,6 @@ import {
 import axios from 'axios';
 
 export default function GrievanceList({ mode }) {
-
     const dispatch = useDispatch();
 
     const [grievances, setGrievances] = useState([]);
@@ -37,7 +36,6 @@ export default function GrievanceList({ mode }) {
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_URL}/api/grievance`
             );
-            console.log(response.data.result);
             setGrievances(response.data.result);
             dispatch(stopLoadingAction());
         };
@@ -85,7 +83,6 @@ export default function GrievanceList({ mode }) {
                         />
                     ))}
             </Box>
-
         </Box>
     );
 }
