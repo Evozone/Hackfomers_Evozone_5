@@ -161,14 +161,32 @@ export default function ChooserCard({ mode }) {
                             }}
                         >
                             {currentUser.organizations.map((org) => (
-                                <ConsistentButton
-                                    key={org.uid}
-                                    mode={mode}
-                                    title={`${org.name}  |   open`}
+                                <Box
+                                    sx={{
+                                        display: 'grid',
+                                        placeItems: 'center',
+                                        textAlign: 'center',
+                                        p: 2,
+                                        m: 2,
+                                        width: '400px',
+                                        font: '500 1rem Work Sans, sans-serif',
+                                        backgroundColor:
+                                            mode === 'light' ? lMode2 : dMode2,
+                                        borderRadius: '20px',
+                                        cursor: 'pointer',
+                                        '&:hover': {
+                                            backgroundColor:
+                                                mode === 'light'
+                                                    ? lMode3
+                                                    : dMode3,
+                                        },
+                                    }}
                                     onClick={() => {
                                         handleOrgJoin(org._id);
                                     }}
-                                />
+                                >
+                                    {`${org.name}  |  open`}
+                                </Box>
                             ))}
                         </Box>
                     </Box>
