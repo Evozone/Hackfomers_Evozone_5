@@ -32,11 +32,7 @@ export default function App() {
     const [mode, setMode] = useState(localTheme ? localTheme : 'light');
 
     // Where to not show the appbar
-    const noAppbar = [
-        '/',
-        '/choose',
-        '/createOrg',
-    ]
+    const noAppbar = ['/', '/choose', '/createOrg'];
 
     useEffect(() => {
         const auth = window.localStorage.getItem('hackathonApp');
@@ -73,11 +69,9 @@ export default function App() {
 
             if (value && value !== undefined) {
                 navigate(`/${value}`);
-
             } else {
                 navigate('/choose');
             }
-
         } else {
             navigate('/');
         }
@@ -116,16 +110,10 @@ export default function App() {
                 />
 
                 {/* Choose Page */}
-                <Route
-                    path='/choose'
-                    element={<Choose mode={mode} />}
-                />
+                <Route path='/choose' element={<Choose mode={mode} />} />
 
                 {/* Create Organization */}
-                <Route
-                    path='/createOrg'
-                    element={<CreateOrg mode={mode} />}
-                />
+                <Route path='/createOrg' element={<CreateOrg mode={mode} />} />
 
                 {/* Spaces Page */}
                 <Route
@@ -159,7 +147,10 @@ export default function App() {
                 <Route
                     path='/createGrievance'
                     element={
-                        <CreateGrievance themeChange={themeChange} mode={mode} />
+                        <CreateGrievance
+                            themeChange={themeChange}
+                            mode={mode}
+                        />
                     }
                 />
 
@@ -177,7 +168,7 @@ export default function App() {
 
                 {/* Organization page */}
                 <Route
-                    path='/organization/12345'
+                    path='/organization'
                     element={<OrgInfo themeChange={themeChange} mode={mode} />}
                 />
             </Routes>
@@ -191,7 +182,6 @@ export default function App() {
                     }}
                 />
             ) : null}
-
         </ThemeProvider>
     );
 }

@@ -95,12 +95,11 @@ function MainAppbar({ mode, themeChange }) {
         },
         {
             text: 'Organization',
-            text: 'Organization',
             icon: <ApartmentIcon />,
-            value: 'organization/12345',
+            value: 'organization',
             onClick: () => {
                 handleMenuClose();
-                navigate('/organization/12345');
+                navigate('/organization');
             },
         },
     ];
@@ -116,7 +115,6 @@ function MainAppbar({ mode, themeChange }) {
 
     const handleNavigation = (text, value) => {
         setSelected(text);
-        window.localStorage.setItem('hackathonAppLastPage', text);
         navigate(`/${value}`);
     };
 
@@ -159,7 +157,9 @@ function MainAppbar({ mode, themeChange }) {
                 height: 'fit-content',
                 background: mode === 'light' ? lMode1 : dMode1,
 
-                boxShadow: hasScrolled ? '0px 0px 4px 0px rgba(0,0,0,0.3)' : 'none',
+                boxShadow: hasScrolled
+                    ? '0px 0px 4px 0px rgba(0,0,0,0.3)'
+                    : 'none',
                 transition: 'box-shadow 0.3s ease-in-out',
 
                 zIndex: '1000',
@@ -196,8 +196,7 @@ function MainAppbar({ mode, themeChange }) {
                         >
                             {item.icon}
                             &nbsp;
-                            {hovered === item.text ||
-                                selected === item.text
+                            {hovered === item.text || selected === item.text
                                 ? item.text
                                 : ''}
                         </CustomSwitcherButton>

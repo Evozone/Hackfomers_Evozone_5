@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 
 // MUI Components
 import Box from '@mui/material/Box';
@@ -24,6 +24,9 @@ import {
 } from '../../utils/colors';
 
 export default function Choose({ mode }) {
+    useEffect = () => {
+        window.localStorage.setItem('hackathonAppLastPage', 'choose');
+    };
     return (
         <Box
             sx={{
@@ -35,7 +38,6 @@ export default function Choose({ mode }) {
                 background: mode === 'light' ? lMode1 : dMode1,
             }}
         >
-
             <Box
                 sx={{
                     position: 'absolute',
@@ -48,19 +50,21 @@ export default function Choose({ mode }) {
                     backgroundRepeat: 'no-repeat',
                     display: 'flex',
                     justifyContent: 'center',
-
                 }}
             >
-                <Typography sx={{
-                    margin: '5vh',
-                    color: 'white',
-                    font: '700 5rem Poppins, sans-serif',
-                }}>Dashboard</Typography>
-
+                <Typography
+                    sx={{
+                        margin: '5vh',
+                        color: 'white',
+                        font: '700 5rem Poppins, sans-serif',
+                    }}
+                >
+                    Dashboard
+                </Typography>
             </Box>
 
             {/* The Component to choose */}
             <ChooserCard mode={mode} />
-        </Box >
+        </Box>
     );
 }
