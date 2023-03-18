@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // MUI Components
 import Box from '@mui/material/Box';
@@ -8,9 +9,21 @@ import CommentIcon from '@mui/icons-material/Comment';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import ListItemText from '@mui/material/ListItemText';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // Custom Components
 import { CustomSwitcherGroup, CustomSwitcherButton } from './CustomSwitcher';
+
+// Actions
+import { signOutAction } from '../actions/actions';
 
 // Colors
 import {
@@ -28,11 +41,11 @@ import {
     dMode6,
 } from '../utils/colors';
 
-import { Avatar, Icon } from '@mui/material';
-
 function MainAppbar({ mode, themeChange }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
+    const currentUser = useSelector((state) => state.auth);
     const [anchorEl, setAnchorEl] = useState(null);
     const [hovered, setHovered] = useState(false);
 
@@ -94,6 +107,11 @@ function MainAppbar({ mode, themeChange }) {
 
     const handleSignOut = () => {
         const choice = window.confirm('Please click on OK to Log Out.');
+        if (choice) {
+            dispatch(signOutAction());
+            window.localStorage.removeItem('hackathonAppLastPage');
+            navigate('/'); // Redirect to home page
+        }
     };
 
     const handleNavigation = (text, value) => {
@@ -148,6 +166,7 @@ function MainAppbar({ mode, themeChange }) {
                 p: '4px',
             }}
         >
+
             {/* The rounded swticher thing */}
             <Box
                 sx={{
@@ -184,8 +203,100 @@ function MainAppbar({ mode, themeChange }) {
                         </CustomSwitcherButton>
                     ))}
                 </CustomSwitcherGroup>
+
+                {currentUser?.isSignedIn ? (
+                    <IconButton sx={{ p: '6px' }} onClick={handleMenuClick}>
+                        <Avatar
+                            alt={currentUser.name.charAt(0).toUpperCase()}
+                            src={currentUser.avatar}
+                            sx={{
+                                bgcolor: mode === 'light' ? lMode5 : dMode5,
+                                color: mode === 'light' ? lMode1 : dMode1,
+                                height: 40,
+                                width: 40,
+                                border: '2px solid',
+                            }}
+                        >
+                            {currentUser.name.charAt(0).toUpperCase()}
+                        </Avatar>
+                    </IconButton>
+                ) : (
+                    null
+                )}
+                <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                    sx={{
+                        '& .MuiPaper-root': {
+                            backgroundColor: mode === 'light' ? lMode1 : dMode1,
+                            boxShadow: 'none',
+                            border: `1px solid ${lMode6}`,
+                        },
+                    }}
+                >
+                    <MenuItem
+                        onClick={() => {
+                            themeChange();
+                        }}
+                    >
+                        {mode === 'light' ? (
+                            <DarkModeIcon
+                                sx={{
+                                    color: mode === 'light' ? lMode3 : dMode3,
+                                    fontSize: '1.7rem',
+                                    ml: -0.5,
+                                }}
+                            />
+                        ) : (
+                            <LightModeIcon
+                                sx={{
+                                    color: mode === 'light' ? lMode3 : dMode3,
+                                    fontSize: '1.7rem',
+                                    ml: -0.5,
+                                }}
+                            />
+                        )}
+                        <ListItemText sx={{ ml: 1 }} primary='Theme' />
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => {
+                            handleMenuClose();
+                            navigate('/profile');
+                            // setModalVisible(true);
+                        }}
+                    >
+                        <AccountBoxIcon
+                            sx={{
+                                color: mode === 'light' ? lMode3 : dMode3,
+                                fontSize: '1.7rem',
+                                ml: -0.5,
+                            }}
+                        />
+                        <ListItemText sx={{ ml: 1 }} primary='Profile' />
+                    </MenuItem>
+                    {/* {renderInstallOption()} */}
+                    <MenuItem
+                        onClick={() => {
+                            handleMenuClose();
+                            handleSignOut();
+                        }}
+                    >
+                        <LogoutIcon
+                            sx={{
+                                color: mode === 'light' ? lMode3 : dMode3,
+                            }}
+                        />
+                        <ListItemText sx={{ ml: 1 }} primary='Logout' />
+                    </MenuItem>
+                </Menu>
+
             </Box>
             {/* End of Switcher */}
+
+            {/* The Avatar */}
+
         </Box> // End of Container
     );
 }
