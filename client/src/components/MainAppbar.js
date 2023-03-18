@@ -82,6 +82,7 @@ function MainAppbar({ mode, themeChange }) {
         },
         {
             text: 'Organization',
+            text: 'Organization',
             icon: <ApartmentIcon />,
             value: 'organization/12345',
             onClick: () => {
