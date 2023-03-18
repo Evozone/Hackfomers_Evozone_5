@@ -13,7 +13,18 @@ import { CustomSwitcherGroup, CustomSwitcherButton } from './CustomSwitcher';
 
 // Colors
 import {
-    lMode1, lMode2, lMode3, lMode4, lMode5, lMode6, dMode1, dMode2, dMode3, dMode4, dMode5, dMode6,
+    lMode1,
+    lMode2,
+    lMode3,
+    lMode4,
+    lMode5,
+    lMode6,
+    dMode1,
+    dMode2,
+    dMode3,
+    dMode4,
+    dMode5,
+    dMode6,
 } from '../utils/colors';
 
 import { Avatar, Icon } from '@mui/material';
@@ -114,7 +125,6 @@ function MainAppbar({ mode, themeChange }) {
                     top: '5px',
                 }}
             >
-
                 <CustomSwitcherGroup exclusive>
                     {/* Map over the menu */}
                     {menuItems.map((item) => (
@@ -122,17 +132,21 @@ function MainAppbar({ mode, themeChange }) {
                             key={item.text}
                             value={item.text}
                             selected={selected === item.text.toLowerCase()}
-                            onClick={() => handleNavigation(item.text.toLowerCase())}
+                            onClick={() =>
+                                handleNavigation(item.text.toLowerCase())
+                            }
                             onMouseEnter={() => setHovered(item.value)}
                             onMouseLeave={() => setHovered(false)}
                         >
                             {item.icon}
                             &nbsp;
-                            {hovered === item.value || selected === item.text.toLowerCase() ? item.text : ''}
+                            {hovered === item.value ||
+                            selected === item.text.toLowerCase()
+                                ? item.text
+                                : ''}
                         </CustomSwitcherButton>
                     ))}
                 </CustomSwitcherGroup>
-
             </Box>
             {/* End of Switcher */}
         </Box> // End of Container

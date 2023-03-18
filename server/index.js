@@ -6,6 +6,9 @@ const uuid4 = require('uuid4');
 const { Server } = require('socket.io');
 
 const userRouter = require('./routes/user.js');
+const grievanceRouter = require('./routes/grievance.js');
+const orgRouter = require('./routes/org.js');
+const commentRouter = require('./routes/comment.js');
 
 const app = express();
 dotenv.config();
@@ -23,6 +26,9 @@ app.use((req, res, next) => {
 app.use(express.json({ limit: '10MB' }));
 
 app.use('/api/user', userRouter);
+app.use('/api/grievance', grievanceRouter);
+app.use('/api/org', orgRouter);
+app.use('/api/comment', commentRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello, welocme to hackathons API');

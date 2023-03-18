@@ -20,10 +20,19 @@ const orgSchema = new mongoose.Schema(
         website: {
             type: String,
         },
-        admin: {
+        createdBy: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
         },
+        createdAt: {
+            type: String,
+        },
+        admin: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
         members: [
             {
                 type: mongoose.Schema.Types.ObjectId,
