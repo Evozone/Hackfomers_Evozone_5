@@ -18,6 +18,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import ListItemText from '@mui/material/ListItemText';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Typography from '@mui/material/Typography';
 
 // Custom Components
 import { CustomSwitcherGroup, CustomSwitcherButton } from './CustomSwitcher';
@@ -39,6 +40,7 @@ import {
     dMode4,
     dMode5,
     dMode6,
+    richBlue,
 } from '../utils/colors';
 
 function MainAppbar({ mode, themeChange }) {
@@ -150,7 +152,7 @@ function MainAppbar({ mode, themeChange }) {
 
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'flex-end',
+                justifyContent: 'space-between',
                 alignItems: 'center',
 
                 width: '100%',
@@ -166,6 +168,16 @@ function MainAppbar({ mode, themeChange }) {
                 p: '4px',
             }}
         >
+            {/* Name of the website */}
+            <Typography
+                variant="h6"
+                sx={{
+                    color: mode === 'light' ? lMode3 : dMode3,
+                    font: '600 2.3rem Poppins, sans-serif',
+                }}
+            >
+                | Resolva
+            </Typography>
             {/* The rounded swticher thing */}
             <Box
                 sx={{
@@ -208,8 +220,7 @@ function MainAppbar({ mode, themeChange }) {
                             alt={currentUser.name.charAt(0).toUpperCase()}
                             src={currentUser.avatarURL}
                             sx={{
-                                bgcolor: mode === 'light' ? lMode5 : dMode5,
-                                color: mode === 'light' ? lMode1 : dMode1,
+                                bgcolor: mode === 'light' ? lMode1 : dMode1,
                                 height: 40,
                                 width: 40,
                                 border: '2px solid',

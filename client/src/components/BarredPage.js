@@ -16,7 +16,6 @@ export default function BarredPage({ mode, children }) {
                 alignItems: 'center',
                 minHeight: '100vh',
                 background: mode === 'light' ? lMode1 : dMode1,
-
                 pt: 8,
             }}>
             {children}
