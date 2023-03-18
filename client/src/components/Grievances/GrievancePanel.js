@@ -13,8 +13,18 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 import {
-    lMode1, lMode2, lMode3, lMode4, lMode5, lMode6,
-    dMode1, dMode2, dMode3, dMode4, dMode5, dMode6,
+    lMode1,
+    lMode2,
+    lMode3,
+    lMode4,
+    lMode5,
+    lMode6,
+    dMode1,
+    dMode2,
+    dMode3,
+    dMode4,
+    dMode5,
+    dMode6,
 } from '../../utils/colors';
 
 const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
@@ -31,8 +41,8 @@ export default function GrievancePanel({ grievance, mode }) {
     const navigate = useNavigate();
 
     const handleGrievanceClick = () => {
-        navigate(`/grievance/${grievance._id}`);
-    }
+        navigate(`/grievances/${grievance._id}`);
+    };
 
     return (
         <Card
@@ -51,11 +61,10 @@ export default function GrievancePanel({ grievance, mode }) {
                 '&:hover': {
                     cursor: 'pointer',
                     backgroundColor: mode === 'light' ? lMode4 : lMode5,
-                }
+                },
             }}
             onClick={handleGrievanceClick}
         >
-
             <StyledCardHeader
                 title={grievance.title}
                 subheader={`${grievance.createdBy.name} | Status : ${grievance.status}`}
@@ -81,7 +90,9 @@ export default function GrievancePanel({ grievance, mode }) {
                     }}
                 />
 
-                <Typography variant='body2' color='text.secondary'
+                <Typography
+                    variant='body2'
+                    color='text.secondary'
                     sx={{
                         textAlign: 'center',
                         font: '400 1.2rem Work Sans, sans-serif',
@@ -101,16 +112,17 @@ export default function GrievancePanel({ grievance, mode }) {
                     }}
                 />
 
-                <Typography variant='body2' color='text.secondary'
+                <Typography
+                    variant='body2'
+                    color='text.secondary'
                     sx={{
                         textAlign: 'center',
                         font: '400 1.2rem Work Sans, sans-serif',
                     }}
                 >
-                    {grievance.comments.length} <br></br> Comments
+                    {grievance?.comments.length} <br></br> Comments
                 </Typography>
-
             </CardContent>
-        </Card >
+        </Card>
     );
 }
