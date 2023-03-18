@@ -26,12 +26,15 @@ export default function GrievancePanel({ key, grievance, mode }) {
             sx={{
                 minWidth: 275,
                 margin: '5px',
+
                 display: 'flex',
                 justifyContent: 'space-between',
+
                 padding: '10px',
                 margin: '10px',
                 borderRadius: '20px',
                 boxShadow: 'none',
+
                 backgroundColor: mode === 'light' ? lMode2 : lMode6,
                 '&:hover': {
                     cursor: 'pointer',

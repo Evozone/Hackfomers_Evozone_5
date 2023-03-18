@@ -79,43 +79,42 @@ export default function CreateGrievance({ mode }) {
                     Create a Grievance
                 </Typography>
 
-                {/* <DashBoardContent mode={mode}> */}
+                <Box>
+                    <StyledTextField
+                        label="Title"
+                        variant="outlined"
+                        fullWidth
+                        name="title"
+                        value={grievance.title}
+                        onChange={handleInputChange}
+                    />
 
-                <StyledTextField
-                    label="Title"
-                    variant="outlined"
-                    fullWidth
-                    name="title"
-                    value={grievance.title}
-                    onChange={handleInputChange}
-                />
+                    <StyledTextField
+                        label="Description"
+                        variant="outlined"
+                        fullWidth
+                        name="description"
+                        value={grievance.description}
+                        onChange={handleInputChange}
+                    />
 
-                <StyledTextField
-                    label="Description"
-                    variant="outlined"
-                    fullWidth
-                    name="description"
-                    value={grievance.description}
-                    onChange={handleInputChange}
-                />
+                    <StyledTextField
+                        label="Title"
+                        variant="outlined"
+                        fullWidth
+                        name="title"
+                        value={grievance.title}
+                        onChange={handleInputChange}
+                    />
 
-                <StyledTextField
-                    label="Title"
-                    variant="outlined"
-                    fullWidth
-                    name="title"
-                    value={grievance.title}
-                    onChange={handleInputChange}
-                />
+                    {/* TODO: Vishal (Put image input) */}
 
-                {/* TODO: Vishal (Put image input) */}
-
-                <ConsistentButton
-                    mode={mode}
-                    title="Create Grievance"
-                    onClick={handleSubmit}
-                />
-                {/* </DashBoardContent> */}
+                    <ConsistentButton
+                        mode={mode}
+                        title="Create Grievance"
+                        onClick={handleSubmit}
+                    />
+                </Box>
             </Box>
         </Box>
     );

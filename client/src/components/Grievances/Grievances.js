@@ -38,15 +38,39 @@ export default function Grievances({ themeChange, mode }) {
                 onChange={handleChangeView}
                 aria-label="grievance view"
                 sx={{
-                    mb: 2,
+                    mt: 3,
                     background: mode === 'light' ? lMode4 : dMode4,
+                    borderRadius: '50px',
+                    '& .MuiToggleButton-root': {
+                        border: 'none',
+                        borderRadius: '50px',
+                        '&.Mui-selected': {
+                            background: mode === 'light' ? lMode5 : dMode5,
+                            color: mode === 'light' ? 'white' : 'black',
+                        },
+                    },
                 }}
             >
-                <ToggleButton value="createGrievance" aria-label="create grievance">
-                    Create Grievance
+                <ToggleButton value="createGrievance" aria-label="create grievance" >
+                    <Typography
+                        textTransform='none'
+                        sx={{
+                            font: '500 1rem Work Sans, sans-serif',
+                        }}
+                    >
+                        Create Grievance
+                    </Typography>
+
                 </ToggleButton>
                 <ToggleButton value="grievanceList" aria-label="grievance list">
-                    Grievance List
+                    <Typography
+                        textTransform='none'
+                        sx={{
+                            font: '500 1rem Work Sans, sans-serif',
+                        }}
+                    >
+                        Grievance List
+                    </Typography>
                 </ToggleButton>
             </ToggleButtonGroup>
 
