@@ -9,6 +9,7 @@ const userRouter = require('./routes/user.js');
 const grievanceRouter = require('./routes/grievance.js');
 const orgRouter = require('./routes/org.js');
 const commentRouter = require('./routes/comment.js');
+const roomsRouter = require('./routes/room.js');
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,40 @@ app.use('/api/user', userRouter);
 app.use('/api/grievance', grievanceRouter);
 app.use('/api/org', orgRouter);
 app.use('/api/comment', commentRouter);
+app.use('/api/rooms', roomsRouter);
+
+app.get('/mtoken', (req, res) => {
+    var app_access_key = process.env.HMS_ACCESS_KEY;
+    var app_secret = process.env.HMS_SECRET_APP;
+    try {
+        const token = jwt.sign(
+            {
+                access_key: app_access_key,
+                type: 'management',
+                version: 2,
+                iat: Math.floor(Date.now() / 1000),
+                nbf: Math.floor(Date.now() / 1000),
+            },
+            app_secret,
+            {
+                algorithm: 'HS256',
+                expiresIn: '1h',
+                jwtid: uuid4(),
+            }
+        );
+        res.status(200).json({
+            success: true,
+            data: {
+                token,
+            },
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            data: { error },
+        });
+    }
+});
 
 app.get('/', (req, res) => {
     res.send('Hello, welocme to hackathons API');

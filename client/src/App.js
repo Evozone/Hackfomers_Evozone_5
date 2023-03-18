@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import jwtDecode from 'jwt-decode';
 import CssBaseline from '@mui/material/CssBaseline';
+import { HMSRoomProvider } from '@100mslive/hms-video-react';
 
 // Routes
 import LandingPage from './components/LandingPage';
@@ -14,7 +15,7 @@ import CreateGrievance from './components/Grievances/CreateGrievance';
 import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
-import CreateOrg from './components/Choose/CreateOrg';//Changed
+import CreateOrg from './components/Choose/CreateOrg'; //Changed
 import OrgInfo from './components/OrgInfo';
 
 // Components
@@ -23,6 +24,7 @@ import Grievance from './components/Grievances/Grievance';
 
 // Actions
 import { signInAction } from './actions/actions';
+import VoiceRoom from './components/VoiceRoom';
 
 export default function App() {
     const navigate = useNavigate();
@@ -119,13 +121,21 @@ export default function App() {
                 {/* Spaces Page */}
                 <Route
                     path='/spaces'
-                    element={<Spaces themeChange={themeChange} mode={mode} />}
+                    element={
+                        <HMSRoomProvider>
+                            <Spaces themeChange={themeChange} mode={mode} />
+                        </HMSRoomProvider>
+                    }
                 />
 
                 {/* Individual Space Page */}
                 <Route
-                    path='/spaces/:id'
-                    element={<Spaces themeChange={themeChange} mode={mode} />}
+                    path='/room/:id'
+                    element={
+                        <HMSRoomProvider>
+                            <VoiceRoom themeChange={themeChange} mode={mode} />
+                        </HMSRoomProvider>
+                    }
                 />
 
                 {/* Grievances Page */}
