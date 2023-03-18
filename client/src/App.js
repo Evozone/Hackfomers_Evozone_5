@@ -17,6 +17,9 @@ import MainAppbar from './components/MainAppbar';
 import CreateOrg from './components/Choose/CreateOrg';
 import OrgInfo from './components/OrgInfo';
 
+// Components
+import Loading from './components/Loading';
+
 // Actions
 import { signInAction } from './actions/actions';
 
@@ -101,6 +104,7 @@ export default function App() {
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
+            <Loading />
 
             <Routes>
                 {/* Landing Page */}

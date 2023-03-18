@@ -1,7 +1,13 @@
 import React from 'react'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 export default function Grievance() {
     return (
-        <div>Grievance</div>
+        <Box>
+            <Typography>
+                Grievance
+            </Typography>
+        </Box>
     )
 }
