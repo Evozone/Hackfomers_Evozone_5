@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const OrgModel = require('../models/orgModel');
 const jwt = require('jsonwebtoken');
 
 exports.googleSignUp = async (req, res) => {
@@ -42,6 +43,32 @@ exports.googleSignUp = async (req, res) => {
                 message: 'User created',
             });
         }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong',
+            error: error.message,
+        });
+        console.log(error);
+    }
+};
+
+exports.joinOrg = async (req, res) => {
+    try {
+        const { orgId, mid } = req.body;
+        const user = await UserModel.findByIdAndUpdate(mid, {
+            $push: { organizations: orgId },
+        })
+            .populate('organizations')
+            .exec();
+        await OrgModel.findByIdAndUpdate(orgId, {
+            $push: { members: mid },
+        });
+        res.status(200).json({
+            success: true,
+            result: user,
+            message: 'User joined org',
+        });
     } catch (error) {
         res.status(500).json({
             success: false,

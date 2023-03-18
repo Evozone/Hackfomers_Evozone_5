@@ -31,6 +31,7 @@ import {
     dMode5,
     dMode6,
 } from '../../utils/colors';
+import axios from 'axios';
 
 export default function ChooserCard({ mode }) {
     const navigate = useNavigate();
@@ -43,10 +44,19 @@ export default function ChooserCard({ mode }) {
         setOrgCode(event.target.value);
     };
 
-    const handleOrgCodeSubmit = () => {
+    const handleOrgCodeSubmit = async () => {
         // Backend team handles the organization code submission
         console.log(`Submitted organization code: ${orgCode}`);
         window.localStorage.setItem('organizationId', JSON.stringify(orgCode));
+        const data = {
+            orgId: orgCode,
+            mid: currentUser.mid,
+        };
+        await axios({
+            method: 'POST',
+            url: `${process.env.REACT_APP_SERVER_URL}/api/user/joinOrg`,
+            data,
+        });
         navigate('/organization');
     };
 
