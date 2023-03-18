@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // MUI Components
@@ -39,6 +39,8 @@ function MainAppbar({ mode, themeChange }) {
     const [selected, setSelected] = useState(
         window.localStorage.getItem('hackathonAppLastPage') || 'spaces'
     );
+
+    const [hasScrolled, setHasScrolled] = useState(false);
 
     // Array of menu items
     const menuItems = [
@@ -107,23 +109,47 @@ function MainAppbar({ mode, themeChange }) {
         setAnchorEl(null);
     };
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.pageYOffset;
+            if (scrollTop > 0) {
+                setHasScrolled(true);
+            } else {
+                setHasScrolled(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         // Container for the Top Appbar
         <Box
             sx={{
                 position: 'fixed',
                 top: 0,
+
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 alignItems: 'center',
+
                 width: '100%',
+                height: 'fit-content',
+                background: mode === 'light' ? lMode1 : dMode1,
+
+                boxShadow: hasScrolled ? '0px 0px 4px 0px rgba(0,0,0,0.3)' : 'none',
+                transition: 'box-shadow 0.3s ease-in-out',
+
+                zIndex: '1000',
+                p: '4px',
             }}
         >
             {/* The rounded swticher thing */}
             <Box
                 sx={{
-                    position: 'absolute',
                     display: 'flex',
                     justifyContent: 'space-between',
 
@@ -151,7 +177,7 @@ function MainAppbar({ mode, themeChange }) {
                             {item.icon}
                             &nbsp;
                             {hovered === item.value ||
-                            selected === item.text.toLowerCase()
+                                selected === item.text.toLowerCase()
                                 ? item.text
                                 : ''}
                         </CustomSwitcherButton>

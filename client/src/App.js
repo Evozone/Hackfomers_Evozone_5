@@ -67,11 +67,14 @@ export default function App() {
                 )
             );
             const value = window.localStorage.getItem('hackathonAppLastPage');
+
             if (value && value !== undefined) {
                 navigate(`/${value}`);
+
             } else {
                 navigate('/choose');
             }
+
         } else {
             navigate('/');
         }

@@ -1,7 +1,14 @@
 import React from 'react'
+import Box from '@mui/material/Box'
 
-export default function Chat() {
+import BarredPage from './BarredPage'
+
+export default function Chat({ themeChange, mode }) {
     return (
-        <div>Chat</div>
+        <BarredPage mode={mode}>
+            <Box>
+                Chat
+            </Box>
+        </BarredPage>
     )
 }
