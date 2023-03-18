@@ -37,7 +37,7 @@ function MainAppbar({ mode, themeChange }) {
     const [hovered, setHovered] = useState(false);
 
     const [selected, setSelected] = useState(
-        window.localStorage.getItem('hackathonAppLastPage') || 'spaces'
+        window.localStorage.getItem('hackathonAppLastPage') || 'Spaces'
     );
 
     const [hasScrolled, setHasScrolled] = useState(false);
@@ -47,7 +47,7 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Spaces',
             icon: <Groups2Icon />,
-            value: 'Spaces',
+            value: 'spaces',
             onClick: () => {
                 handleMenuClose();
                 navigate('/spaces');
@@ -56,7 +56,7 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Grievances',
             icon: <LibraryBooksIcon />,
-            value: 'Grievances',
+            value: 'grievances',
             onClick: () => {
                 handleMenuClose();
                 navigate('/grievances');
@@ -65,7 +65,7 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Chat',
             icon: <CommentIcon />,
-            value: 'Chat',
+            value: 'chat',
             onClick: () => {
                 handleMenuClose();
                 navigate('/chat');
@@ -74,19 +74,19 @@ function MainAppbar({ mode, themeChange }) {
         {
             text: 'Reports',
             icon: <PersonSearchIcon />,
-            value: 'Reports',
+            value: 'reports',
             onClick: () => {
                 handleMenuClose();
                 navigate('/reports');
             },
         },
         {
-            text: 'Oraganization',
+            text: 'Organization',
             icon: <ApartmentIcon />,
-            value: 'Oraganization',
+            value: 'organization/12345',
             onClick: () => {
                 handleMenuClose();
-                navigate('/organization');
+                navigate('/organization/12345');
             },
         },
     ];
@@ -95,9 +95,9 @@ function MainAppbar({ mode, themeChange }) {
         const choice = window.confirm('Please click on OK to Log Out.');
     };
 
-    const handleNavigation = (value) => {
-        setSelected(value);
-        window.localStorage.setItem('hackathonAppLastPage', value);
+    const handleNavigation = (text, value) => {
+        setSelected(text);
+        window.localStorage.setItem('hackathonAppLastPage', text);
         navigate(`/${value}`);
     };
 
@@ -165,19 +165,19 @@ function MainAppbar({ mode, themeChange }) {
                     {/* Map over the menu */}
                     {menuItems.map((item) => (
                         <CustomSwitcherButton
-                            key={item.text}
-                            value={item.text}
-                            selected={selected === item.text.toLowerCase()}
+                            key={item.value}
+                            value={item.value}
+                            selected={selected === item.text}
                             onClick={() =>
-                                handleNavigation(item.text.toLowerCase())
+                                handleNavigation(item.text, item.value)
                             }
-                            onMouseEnter={() => setHovered(item.value)}
+                            onMouseEnter={() => setHovered(item.text)}
                             onMouseLeave={() => setHovered(false)}
                         >
                             {item.icon}
                             &nbsp;
-                            {hovered === item.value ||
-                                selected === item.text.toLowerCase()
+                            {hovered === item.text ||
+                                selected === item.text
                                 ? item.text
                                 : ''}
                         </CustomSwitcherButton>

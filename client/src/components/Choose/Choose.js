@@ -54,7 +54,6 @@ export default function Choose({ mode }) {
                 <Typography sx={{
                     margin: '5vh',
                     color: 'white',
-                    fontSize: '5rem',
                     font: '700 5rem Poppins, sans-serif',
                 }}>Dashboard</Typography>
 
