@@ -184,7 +184,7 @@ export default function OrgInfo({ themeChange, mode }) {
                                                                 : dMode6,
                                                     }}
                                                 >
-                                                    {grievance.createdBy.name}
+                                                    {orgInfo.createdBy.name}
                                                 </Typography>
                                             </Box>
                                         )}
