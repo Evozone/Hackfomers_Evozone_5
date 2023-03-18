@@ -1,7 +1,5 @@
-import React from 'react'
+import GoogleOneTapLogin from './GoogleOneTapLogin';
 
 export default function LandingPage() {
-    return (
-        <div>LandingPage</div>
-    )
+    return <GoogleOneTapLogin />;
 }
