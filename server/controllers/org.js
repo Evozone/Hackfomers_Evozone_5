@@ -65,7 +65,7 @@ exports.createOrg = async (req, res) => {
             website,
             admin,
         });
-        await UserModel.findOneAndUpdate(createdBy, {
+        await UserModel.findByIdAndUpdate(createdBy, {
             $push: { organizations: org._id },
         });
         res.status(201).json({

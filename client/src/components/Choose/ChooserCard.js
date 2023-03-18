@@ -1,40 +1,59 @@
-import React, { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import ChooserCardSection from './ChooserCardSection'
+import React, { useEffect, useState } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
+import ChooserCardSection from './ChooserCardSection';
 
 // MUI Components
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
 import AddIcon from '@mui/icons-material/Add';
 
-
 // Custom Components
-import DashBoardContent from './DashBoardContent'
-import ConsistentButton from '../ConsistentButton'
+import DashBoardContent from './DashBoardContent';
+import ConsistentButton from '../ConsistentButton';
 
 // Colors
 import {
-    lMode1, lMode2, lMode3, lMode4, lMode5, lMode6, dMode1, dMode2, dMode3, dMode4, dMode5, dMode6
-} from '../../utils/colors'
+    lMode1,
+    lMode2,
+    lMode3,
+    lMode4,
+    lMode5,
+    lMode6,
+    dMode1,
+    dMode2,
+    dMode3,
+    dMode4,
+    dMode5,
+    dMode6,
+} from '../../utils/colors';
 
 export default function ChooserCard({ mode }) {
-
     const navigate = useNavigate();
+    const currentUser = useSelector((state) => state.auth);
 
     const [adminOrgs, setAdminOrgs] = useState([]);
     const [orgCode, setOrgCode] = useState('');
 
     const handleOrgCodeChange = (event) => {
         setOrgCode(event.target.value);
-    }
+    };
 
     const handleOrgCodeSubmit = () => {
         // Backend team handles the organization code submission
         console.log(`Submitted organization code: ${orgCode}`);
-    }
+        window.localStorage.setItem('organizationId', JSON.stringify(orgCode));
+        navigate('/organization');
+    };
+
+    const handleOrgJoin = (orgId) => {
+        window.localStorage.setItem('organizationId', JSON.stringify(orgId));
+        navigate('/organization');
+    };
 
     return (
         <DashBoardContent mode={mode}>
@@ -43,7 +62,7 @@ export default function ChooserCard({ mode }) {
                 mode={mode}
                 title='Create an Organization'
             >
-                {adminOrgs.length === 0 ? (
+                {adminOrgs?.length === 0 ? (
                     <Button
                         sx={{
                             color: mode === 'light' ? lMode1 : dMode1,
@@ -57,7 +76,9 @@ export default function ChooserCard({ mode }) {
                                 background: mode === 'light' ? lMode5 : dMode5,
                             },
                         }}
-                        onClick={() => navigate('/createOrg')}
+                        onClick={() => {
+                            navigate('/createOrg');
+                        }}
                     >
                         <AddIcon sx={{ fontSize: 30 }} />
                     </Button>
@@ -78,19 +99,81 @@ export default function ChooserCard({ mode }) {
             {/* Central Divider */}
             <Divider orientation='vertical' flexItem />
 
-            <ChooserCardSection floatDirection='right' mode={mode} title='Join An Organization' >
-                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <ChooserCardSection
+                floatDirection='right'
+                mode={mode}
+                title='Join An Organization'
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}
+                >
                     <TextField
-                        id="organization-code-input"
-                        label="Enter organization code"
-                        variant="outlined"
-                        margin="normal"
+                        id='organization-code-input'
+                        label='Enter organization code'
+                        variant='outlined'
+                        margin='normal'
                         value={orgCode}
                         onChange={handleOrgCodeChange}
                     />
-                    <ConsistentButton mode={mode} title='Join' onClick={handleOrgCodeSubmit} />
+                    <ConsistentButton
+                        mode={mode}
+                        title='Join'
+                        onClick={handleOrgCodeSubmit}
+                    />
                 </Box>
+                {currentUser?.organizations?.length > 0 ? (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                color: mode === 'light' ? lMode4 : dMode4,
+                                font: '400 1.2rem Work Sans, sans-serif',
+                                margin: '20px',
+                            }}
+                        >
+                            You are already a member of the following
+                            organizations:
+                        </Typography>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            {currentUser.organizations.map((org) => (
+                                <ConsistentButton
+                                    key={org.uid}
+                                    mode={mode}
+                                    title={`${org.name}  |   open`}
+                                    onClick={() => {
+                                        handleOrgJoin(org._id);
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    </Box>
+                ) : (
+                    <Typography
+                        sx={{
+                            color: mode === 'light' ? lMode4 : dMode4,
+                            font: '400 1.2rem Work Sans, sans-serif',
+                            margin: '20px',
+                        }}
+                    >
+                        You are not a member of any organizations.
+                    </Typography>
+                )}
             </ChooserCardSection>
         </DashBoardContent>
-    )
+    );
 }

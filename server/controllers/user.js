@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 exports.googleSignUp = async (req, res) => {
     let { uid, email, name, avatarURL, username, socialLinks } = req.body;
     try {
-        const oldUser = await UserModel.findOne({ email });
+        const oldUser = await UserModel.findOne({ email }).populate(
+            'organizations'
+        );
         if (oldUser) {
             const token = jwt.sign(
                 { ...oldUser._doc },
