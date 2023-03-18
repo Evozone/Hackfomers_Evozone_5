@@ -1,19 +1,26 @@
-import React from 'react'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-
-const dummyGrievances = [
-    {
-        id: 1,
-        title: "Grievance 1",
-        description: "Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet",
-        status: "Pending",
-        createdBy: "User 1",
-        createdAt: "2021-07-01",
-    },
-]
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 export default function Grievance() {
+    const [grievance, setGrievance] = useState({});
+    const id = window.location.pathname.split('/')[2];
+    useEffect(() => {
+        const getGrievanceById = async () => {
+            try {
+                const { data } = await axios.get(
+                    `${process.env.REACT_APP_SERVER_URL}/api/grievance/${id}`
+                );
+                console.log(data.result);
+                setGrievance(data.result);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getGrievanceById();
+    }, [id]);
+
     return (
         <Box
             sx={{
@@ -21,13 +28,11 @@ export default function Grievance() {
                 flexDirection: 'column',
                 justifyContent: 'flex-start',
                 width: '100%',
-                p: 2
+                p: 2,
             }}
         >
             <Box>
-                <Typography>
-                    Grievance
-                </Typography>
+                <Typography>Single Grievance</Typography>
             </Box>
 
             {/* Box to Hold the Grievances */}
@@ -37,12 +42,11 @@ export default function Grievance() {
                     flexDirection: 'column',
                     justifyContent: 'flex-start',
                     width: '100%',
-                    p: 2
+                    p: 2,
                 }}
             >
                 Grievances bars
             </Box>
-
         </Box>
-    )
+    );
 }

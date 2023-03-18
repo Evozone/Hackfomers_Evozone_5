@@ -19,6 +19,7 @@ import OrgInfo from './components/OrgInfo';
 
 // Components
 import Loading from './components/Loading';
+import Grievance from './components/Grievances/Grievance';
 
 // Actions
 import { signInAction } from './actions/actions';
@@ -139,7 +140,7 @@ export default function App() {
                 <Route
                     path='/grievances/:id'
                     element={
-                        <Grievances themeChange={themeChange} mode={mode} />
+                        <Grievance themeChange={themeChange} mode={mode} />
                     }
                 />
 

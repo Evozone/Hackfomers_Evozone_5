@@ -151,7 +151,7 @@ export default function CreateGrievance({ mode }) {
                 },
                 data,
             });
-            navigate(`/grivance/${result.data.result._id}`);
+            navigate(`/grivances/${result.data.result._id}`);
         } catch (error) {
             console.log(error);
         }
