@@ -11,8 +11,43 @@ import {
 export default function OrgInfo({ themeChange, mode }) {
     return (
         <BarredPage mode={mode}>
-            <Box>
-                Organization OrgInfo
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+
+                    width: '100%',
+                }}
+            >
+                {/* Cover image */}
+                <Box
+                    role="img"
+                    aria-label="cover"
+                    sx={{
+                        height: '300px', // set a height for the cover image
+                        width: '100%',
+                        background: 'red',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                    }}
+                >image</Box>
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        width: '100%',
+                        minHeight: '100vh',
+                        backgroundColor: mode ? dMode1 : lMode1,
+                        color: mode ? dMode6 : lMode6,
+                        padding: '10px',
+                    }}
+                >
+                </Box>
+
             </Box>
         </BarredPage>
     )
