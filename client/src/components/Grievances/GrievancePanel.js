@@ -49,8 +49,6 @@ export default function GrievancePanel({ key, grievance, mode }) {
                 subheader={`${grievance.createdBy.name} | Status : ${grievance.status}`}
             />
 
-
-
             <CardContent
                 sx={{
                     display: 'flex',

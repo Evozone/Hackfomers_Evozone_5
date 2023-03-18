@@ -47,14 +47,16 @@ export default function CreateGrievance({ mode }) {
 
         // Generate a unique id for the grievance
         const uid = uuid();
+
         setGrievance((prevGrievance) => ({
             ...prevGrievance,
             uid: uid,
             createdBy: currentUser.mid,
             createdAt: Date.now().toString(),
             status: 'open',
-            organization: currentUser.organization,
+            organization: 'Put something here Vishal',
         }));
+
         console.log(grievance);
     };
 
@@ -79,7 +81,26 @@ export default function CreateGrievance({ mode }) {
                     Create a Grievance
                 </Typography>
 
-                <Box>
+                <Box
+                    sx={{
+                        p: 5,
+                        m: 1,
+                        borderRadius: '20px',
+                        boxShadow: 'none',
+
+                        backgroundColor: mode === 'light' ? lMode2 : dMode2,
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            font: '500 1.5rem Work Sans, sans-serif',
+                            color: mode === 'light' ? lMode3 : dMode3,
+                            mb: 4,
+                        }}
+                    >
+                        Fill in the details of your grievance
+                    </Typography>
+
                     <StyledTextField
                         label="Title"
                         variant="outlined"
@@ -99,11 +120,11 @@ export default function CreateGrievance({ mode }) {
                     />
 
                     <StyledTextField
-                        label="Title"
+                        label="Location"
                         variant="outlined"
                         fullWidth
-                        name="title"
-                        value={grievance.title}
+                        name="location"
+                        value={grievance.location}
                         onChange={handleInputChange}
                     />
 
