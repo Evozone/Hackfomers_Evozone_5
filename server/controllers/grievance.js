@@ -106,8 +106,42 @@ exports.getAllGrievances = async (req, res) => {
                     model: 'User',
                 },
             })
-            .populate('createdBy');
-        // .populate('comments');
+            .populate('createdBy')
+            .populate('comments');
+        res.status(200).json({
+            success: true,
+            result: grievances,
+            message: 'Grievances found',
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong',
+            error: error.message,
+        });
+        console.log(error);
+    }
+};
+
+exports.checkGrievance = async (req, res) => {
+    try {
+        const { location, keywords } = req.body;
+        const keyword = {
+            $or: keywords.map((word) => {
+                return {
+                    keywords: {
+                        $elemMatch: { $regex: word.keyword, $options: 'i' },
+                    },
+                };
+            }),
+        };
+        const grievances = await GrievanceModel.find(keyword)
+            .find({
+                location,
+            })
+            .populate('organization')
+            .populate('createdBy')
+            .populate('comments');
         res.status(200).json({
             success: true,
             result: grievances,

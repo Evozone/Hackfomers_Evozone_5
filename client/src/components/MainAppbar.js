@@ -166,7 +166,6 @@ function MainAppbar({ mode, themeChange }) {
                 p: '4px',
             }}
         >
-
             {/* The rounded swticher thing */}
             <Box
                 sx={{
@@ -207,7 +206,7 @@ function MainAppbar({ mode, themeChange }) {
                     <IconButton sx={{ p: '6px' }} onClick={handleMenuClick}>
                         <Avatar
                             alt={currentUser.name.charAt(0).toUpperCase()}
-                            src={currentUser.avatar}
+                            src={currentUser.avatarURL}
                             sx={{
                                 bgcolor: mode === 'light' ? lMode5 : dMode5,
                                 color: mode === 'light' ? lMode1 : dMode1,
@@ -219,9 +218,7 @@ function MainAppbar({ mode, themeChange }) {
                             {currentUser.name.charAt(0).toUpperCase()}
                         </Avatar>
                     </IconButton>
-                ) : (
-                    null
-                )}
+                ) : null}
                 <Menu
                     anchorEl={anchorEl}
                     keepMounted
@@ -290,12 +287,10 @@ function MainAppbar({ mode, themeChange }) {
                         <ListItemText sx={{ ml: 1 }} primary='Logout' />
                     </MenuItem>
                 </Menu>
-
             </Box>
             {/* End of Switcher */}
 
             {/* The Avatar */}
-
         </Box> // End of Container
     );
 }

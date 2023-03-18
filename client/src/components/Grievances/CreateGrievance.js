@@ -14,9 +14,10 @@ import Typography from '@mui/material/Typography';
 // Custom Components
 import ConsistentButton from '../ConsistentButton';
 import { StyledTextField } from '../Choose/CreateOrg';
-import DashBoardContent from '../Choose/DashBoardContent';
 import ImageIcon from '@mui/icons-material/Image';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 
 import {
     lMode1,
@@ -54,6 +55,9 @@ export default function CreateGrievance({ mode }) {
     });
     const [imgLocalURL, setImgLocalURL] = useState('');
     const [imageFile, setImageFile] = useState(null);
+    const [keywords, setKeywords] = useState([]);
+    const [duplicate, setDuplicate] = useState(false);
+    const [duplicateGrievances, setDuplicateGrievances] = useState([]);
 
     const currentUser = useSelector((state) => state.auth);
 
@@ -95,22 +99,22 @@ export default function CreateGrievance({ mode }) {
     const handleSubmit = async () => {
         // Backend team handles the grievance code submission
 
-        if (!grievance.title || !grievance.description) {
-            alert('Title and description are required');
+        if (!grievance.title || !grievance.description || !grievance.location) {
+            alert('Title, description  & location are required');
             return;
         }
         dispatch(startLoadingAction());
         // Generate a unique id for the grievance
         const uid = uuid();
 
-        setGrievance((prevGrievance) => ({
-            ...prevGrievance,
-            uid: uid,
-            createdBy: currentUser.mid,
-            createdAt: Date.now().toString(),
-            status: 'open',
-            organization: 'Put something here Vishal',
-        }));
+        // setGrievance((prevGrievance) => ({
+        //     ...prevGrievance,
+        //     uid: uid,
+        //     createdBy: currentUser.mid,
+        //     createdAt: Date.now().toString(),
+        //     status: 'open',
+        //     organization: 'Put something here Vishal',
+        // }));
 
         const orgId = JSON.parse(window.localStorage.getItem('organizationId'));
 
@@ -133,6 +137,7 @@ export default function CreateGrievance({ mode }) {
             title: grievance.title,
             description: grievance.description,
             status: 'open',
+            keywords: keywords,
             organization: orgId,
             createdBy: currentUser.mid,
             createdAt: Date.now().toString(),
@@ -151,12 +156,68 @@ export default function CreateGrievance({ mode }) {
                 },
                 data,
             });
-            navigate(`/grivances/${result.data.result._id}`);
+            navigate(`/grievances/${result.data.result._id}`);
         } catch (error) {
             console.log(error);
         }
         dispatch(stopLoadingAction());
         console.log(grievance);
+    };
+
+    const getKeywords = async () => {
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+                authorization: `Bearer ${process.env.REACT_APP_EDENAI_API_KEY}`,
+            },
+            body: JSON.stringify({
+                response_as_dict: false,
+                attributes_as_list: false,
+                show_original_response: true,
+                providers: 'openai',
+                text: grievance.description,
+            }),
+        };
+        const response = await fetch(
+            'https://api.edenai.run/v2/text/keyword_extraction',
+            options
+        );
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log(data[0].items);
+        setKeywords(data[0].items);
+        return data[0].items;
+    };
+
+    const checkGrievance = async () => {
+        if (grievance.description && grievance.location) {
+            const keywords = await getKeywords();
+            console.log(keywords);
+            const res = await axios({
+                method: 'POST',
+                url: `${process.env.REACT_APP_SERVER_URL}/api/grievance/check`,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data: {
+                    location: grievance.location,
+                    keywords,
+                },
+            });
+            console.log(res.data);
+            if (res.data.result?.length > 0) {
+                setDuplicateGrievances(res.data.result);
+                setDuplicate(true);
+            } else {
+                handleSubmit();
+            }
+        } else {
+            alert('Please enter a description and location');
+        }
     };
 
     return (
@@ -278,9 +339,80 @@ export default function CreateGrievance({ mode }) {
                 <ConsistentButton
                     mode={mode}
                     title='Create Grievance'
-                    onClick={handleSubmit}
+                    onClick={checkGrievance}
                 />
             </Box>
-        </Box >
+            {duplicate && (
+                <Box
+                    sx={{
+                        p: 5,
+                        m: 1,
+                        borderRadius: '20px',
+                        boxShadow: 'none',
+                        backgroundColor: mode === 'light' ? lMode2 : dMode2,
+                    }}
+                >
+                    <Typography
+                        sx={{
+                            font: '500 1.5rem Work Sans, sans-serif',
+                            color: mode === 'light' ? lMode3 : dMode3,
+                            mb: 4,
+                        }}
+                    >
+                        There are similar grievances already created. Please
+                        check them out.
+                    </Typography>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            width: '100%',
+                            p: 2,
+                        }}
+                    >
+                        {duplicateGrievances.map((grievance) => (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    justifyContent: 'flex-start',
+                                    width: '100%',
+                                    p: 2,
+                                }}
+                                key={grievance._id}
+                            >
+                                <Typography
+                                    sx={{
+                                        font: '500 1.5rem Work Sans, sans-serif',
+                                        color:
+                                            mode === 'light' ? lMode3 : dMode3,
+                                        mb: 4,
+                                    }}
+                                >
+                                    {grievance.title}
+                                </Typography>
+
+                                <Button
+                                    sx={{
+                                        ml: 2,
+                                        color: lMode6,
+                                        backgroundColor: lMode5,
+                                        '&:hover': {
+                                            backgroundColor: lMode5,
+                                        },
+                                    }}
+                                    onClick={() =>
+                                        navigate(`/grievances/${grievance._id}`)
+                                    }
+                                >
+                                    View
+                                </Button>
+                            </Box>
+                        ))}
+                    </Box>
+                </Box>
+            )}
+        </Box>
     );
 }

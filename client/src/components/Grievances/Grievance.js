@@ -18,18 +18,29 @@ import { startLoadingAction, stopLoadingAction } from '../../actions/actions';
 
 // Colors
 import {
-    lMode1, lMode2, lMode3, lMode4, lMode5, lMode6,
-    dMode1, dMode2, dMode3, dMode4, dMode5, dMode6,
+    lMode1,
+    lMode2,
+    lMode3,
+    lMode4,
+    lMode5,
+    lMode6,
+    dMode1,
+    dMode2,
+    dMode3,
+    dMode4,
+    dMode5,
+    dMode6,
 } from '../../utils/colors';
 
 export default function Grievance({ mode }) {
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [grievance, setGrievance] = useState({});
-
-    const routeInfo = window.location.pathname.split('/')[1] + '/' + window.location.pathname.split('/')[2];
+    const routeInfo =
+        window.location.pathname.split('/')[1] +
+        '/' +
+        window.location.pathname.split('/')[2];
     const id = window.location.pathname.split('/')[2];
 
     useEffect(() => {
@@ -39,7 +50,6 @@ export default function Grievance({ mode }) {
                 const { data } = await axios.get(
                     `${process.env.REACT_APP_SERVER_URL}/api/grievance/${id}`
                 );
-                console.log(data.result);
                 setGrievance(data.result);
             } catch (error) {
                 console.log(error);
@@ -66,7 +76,9 @@ export default function Grievance({ mode }) {
                 <ConsistentButton
                     mode={mode}
                     title='Back'
-                    onClick={() => { navigate('/grievances'); }}
+                    onClick={() => {
+                        navigate('/grievances');
+                    }}
                     icon={<KeyboardBackspaceIcon />}
                 />
 
