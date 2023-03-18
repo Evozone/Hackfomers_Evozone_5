@@ -7,14 +7,12 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 
-
 // MUI Icons
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CreateIcon from '@mui/icons-material/Create';
 
 // Components
 import BarredPage from '../BarredPage';
-import Loading from '../Loading';
 import GrievanceList from './GrievanceList';
 import CreateGrievance from './CreateGrievance';
 
@@ -31,8 +29,10 @@ export default function Grievances({ themeChange, mode }) {
     const [currentView, setCurrentView] = useState('createGrievance');
 
     const handleChangeView = (event, newView) => {
-        setCurrentView(newView);
-    }
+        if (newView !== null) {
+            setCurrentView(newView);
+        }
+    };
 
     return (
         <BarredPage mode={mode}>
@@ -59,7 +59,8 @@ export default function Grievances({ themeChange, mode }) {
                     },
                 }}
             >
-                <ToggleButton value="createGrievance" aria-label="create grievance" >
+                <ToggleButton value="createGrievance" aria-label="create grievance"
+                >
                     <Typography
                         textTransform='none'
                         sx={{
@@ -68,7 +69,7 @@ export default function Grievances({ themeChange, mode }) {
                             alignItems: 'center',
                         }}
                     >
-                        <CreateIcon/> &nbsp; Create Grievance
+                        <CreateIcon /> &nbsp; Create Grievance
                     </Typography>
 
                 </ToggleButton>
@@ -81,7 +82,7 @@ export default function Grievances({ themeChange, mode }) {
                             alignItems: 'center',
                         }}
                     >
-                        <FormatListBulletedIcon/> &nbsp; Grievance List
+                        <FormatListBulletedIcon /> &nbsp; Grievance List
                     </Typography>
                 </ToggleButton>
             </ToggleButtonGroup>

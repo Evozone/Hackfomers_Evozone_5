@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import GrievancePanel from './GrievancePanel';
 
+// Material UI
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
+// Actions
+import { startLoadingAction, stopLoadingAction } from '../../actions/actions';
 
 import {
     lMode1,
@@ -21,15 +26,20 @@ import {
 import axios from 'axios';
 
 export default function GrievanceList({ mode }) {
+
+    const dispatch = useDispatch();
+
     const [grievances, setGrievances] = useState([]);
 
     useEffect(() => {
         const getGrievance = async () => {
+            dispatch(startLoadingAction());
             const response = await axios.get(
                 `${process.env.REACT_APP_SERVER_URL}/api/grievance`
             );
             console.log(response.data.result);
             setGrievances(response.data.result);
+            dispatch(stopLoadingAction());
         };
         getGrievance();
     }, []);

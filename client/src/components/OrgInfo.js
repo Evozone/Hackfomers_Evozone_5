@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { startLoadingAction, stopLoadingAction } from '../actions/actions';
+import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
-
 import BarredPage from './BarredPage';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
@@ -21,9 +23,7 @@ import {
     dMode5,
     dMode6,
 } from '../utils/colors';
-import axios from 'axios';
-import { startLoadingAction, stopLoadingAction } from '../actions/actions';
-import { useDispatch } from 'react-redux';
+
 
 export default function OrgInfo({ themeChange, mode }) {
     const dispatch = useDispatch();
