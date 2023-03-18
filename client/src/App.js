@@ -10,7 +10,7 @@ import LandingPage from './components/LandingPage';
 import Choose from './components/Choose/Choose';
 import Spaces from './components/Spaces';
 import Grievances from './components/Grievances/Grievances.js';
-import CreateGrievance from './components/Grievances/CreateGrievance';//Changed
+import CreateGrievance from './components/Grievances/CreateGrievance';
 import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
@@ -19,6 +19,7 @@ import OrgInfo from './components/OrgInfo';
 
 // Components
 import Loading from './components/Loading';
+import Grievance from './components/Grievances/Grievance';
 
 // Actions
 import { signInAction } from './actions/actions';
@@ -139,7 +140,7 @@ export default function App() {
                 <Route
                     path='/grievances/:id'
                     element={
-                        <Grievances themeChange={themeChange} mode={mode} />
+                        <Grievance themeChange={themeChange} mode={mode} />
                     }
                 />
 

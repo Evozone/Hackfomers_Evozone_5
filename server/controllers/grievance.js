@@ -68,8 +68,9 @@ exports.getGrievance = async (req, res) => {
                     model: 'User',
                 },
             })
-            .populate('createdBy');
-        // .populate('comments');
+            .populate('createdBy')
+            .populate('organization')
+            .populate('comments');
 
         if (!grievance) {
             res.status(404).json({
