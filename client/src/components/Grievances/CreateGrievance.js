@@ -10,6 +10,9 @@ import IconButton from '@mui/material/IconButton';
 // MUI Components
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+
 
 // Custom Components
 import ConsistentButton from '../ConsistentButton';
@@ -58,6 +61,9 @@ export default function CreateGrievance({ mode }) {
     const [imageFile, setImageFile] = useState(null);
     const [duplicate, setDuplicate] = useState(false);
     const [duplicateGrievances, setDuplicateGrievances] = useState([]);
+
+    // define the state variable for Alert visibility
+    const [showAlert, setShowAlert] = useState(false);
 
     const currentUser = useSelector((state) => state.auth);
 
@@ -203,6 +209,15 @@ export default function CreateGrievance({ mode }) {
                 dispatch(stopLoadingAction());
                 setDuplicateGrievances(res.data.result);
                 setDuplicate(true);
+                setShowAlert(true);
+
+                // Play the sound when the alert appears
+                const audio = new Audio('/assets/audio/notification.mp3');
+                audio.play();
+
+                setTimeout(() => {
+                    setShowAlert(false);
+                }, 5000);
             } else {
                 handleSubmit(keywords);
             }
@@ -357,16 +372,23 @@ export default function CreateGrievance({ mode }) {
                         backgroundColor: mode === 'light' ? lMode2 : dMode2,
                     }}
                 >
-                    <Typography
-                        sx={{
-                            font: '500 1.5rem Work Sans, sans-serif',
-                            color: mode === 'light' ? lMode3 : dMode3,
-                            mb: 4,
-                        }}
-                    >
-                        There are similar grievances already created. Please
-                        check them out.
-                    </Typography>
+                    {showAlert && (
+                        <Alert
+                            severity="warning"
+                            sx={{
+                                position: 'fixed',
+                                bottom: '0',
+                                right: '0',
+                                font: '500 1.2rem Work Sans, sans-serif',
+                                mb: 4,
+                                border: `1px solid red`,
+                                zIndex: 1000,
+                            }}
+                        >
+                            There are similar grievances already created. Please check them out.
+                        </Alert>
+                    )}
+
                     <Box
                         sx={{
                             display: 'flex',
@@ -376,45 +398,87 @@ export default function CreateGrievance({ mode }) {
                             p: 2,
                         }}
                     >
+                        {/* Form Title */}
+                        <Typography
+                            sx={{
+                                font: '500 1.5rem Work Sans, sans-serif',
+                                color: mode === 'light' ? 'white' : 'black',
+                                mb: 4,
+                            }}
+                        >
+                            These are the complaints or grievances that are similar to yours. Please check them out.
+                        </Typography>
+
                         {duplicateGrievances.map((grievance) => (
                             <Box
                                 sx={{
                                     display: 'flex',
-                                    flexDirection: 'row',
+                                    flexDirection: 'column',
                                     justifyContent: 'flex-start',
                                     width: '100%',
-                                    p: 2,
+                                    p: 4,
+                                    mb: 2,
+                                    border: mode === 'light' ? `2px dashed ${lMode3}` : `2px dashed ${dMode3}`,
+                                    borderRadius: '20px',
                                 }}
                                 key={grievance._id}
                             >
-                                <Typography
+                                <Box
                                     sx={{
-                                        font: '500 1.5rem Work Sans, sans-serif',
-                                        color:
-                                            mode === 'light' ? lMode3 : dMode3,
-                                        mb: 4,
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
                                     }}
                                 >
-                                    {grievance.title}
-                                </Typography>
-
-                                <Button
-                                    sx={{
-                                        ml: 2,
-                                        color: lMode6,
-                                        backgroundColor: lMode5,
-                                        '&:hover': {
-                                            backgroundColor: lMode5,
-                                        },
-                                    }}
-                                    onClick={() =>
-                                        navigate(`/grievances/${grievance._id}`)
-                                    }
-                                >
-                                    View
-                                </Button>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            justifyContent: 'flex-start',
+                                            width: '100%',
+                                        }}
+                                    >
+                                        <Typography
+                                            sx={{
+                                                font: '500 1.5rem Work Sans, sans-serif',
+                                                color: mode === 'light' ? 'black' : 'white',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                                width: '70%',
+                                                mr: 2,
+                                            }}
+                                        >
+                                            {grievance.title}
+                                        </Typography>
+                                        <Typography
+                                            sx={{
+                                                font: '400 1rem Work Sans, sans-serif',
+                                                color: mode === 'light' ? lMode6 : dMode6,
+                                                mt: 2,
+                                            }}
+                                        >
+                                            {grievance.description.substr(0, 200)}...
+                                        </Typography>
+                                    </Box>
+                                    <ConsistentButton
+                                        mode={mode}
+                                        title='Write a Comment Here instead'
+                                        icon={<HistoryEduIcon />}
+                                        onClick={() =>
+                                            navigate(`/grievances/${grievance._id}`)
+                                        }
+                                    />
+                                </Box>
                             </Box>
                         ))}
+                        {/* Submit Button */}
+                        <ConsistentButton
+                            mode={mode}
+                            title='Create new Grievance anyway'
+                            onClick={checkGrievance}
+                        />
                     </Box>
                 </Box>
             )}
