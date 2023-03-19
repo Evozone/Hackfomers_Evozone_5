@@ -19,6 +19,7 @@ exports.createGrievance = async (req, res) => {
             location,
             views,
             comments,
+            keywords,
         } = req.body;
         const grievance = await GrievanceModel.create({
             uid,
@@ -32,6 +33,7 @@ exports.createGrievance = async (req, res) => {
             location,
             views,
             comments,
+            keywords,
         });
         await UserModel.findByIdAndUpdate(createdBy, {
             $push: { grievances: grievance._id },
