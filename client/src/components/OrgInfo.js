@@ -273,7 +273,7 @@ export default function OrgInfo({ themeChange, mode }) {
                                             borderRadius: '20px',
                                             display: 'flex',
                                             flexDirection: 'row',
-                                            justifyContent: 'space-between',
+                                            justifyContent: 'flex-start',
                                         }}
                                     >
                                         <Typography
@@ -289,8 +289,9 @@ export default function OrgInfo({ themeChange, mode }) {
                                         </Typography>
                                         {/* Get all admins */}
                                         {orgInfo.admin.map((admin) => (
+                                            console.log(admin),
                                             <Typography
-                                                key={admin}
+                                                key={admin._id}
                                                 sx={{
                                                     color:
                                                         mode === 'light'
@@ -300,7 +301,7 @@ export default function OrgInfo({ themeChange, mode }) {
                                                 }}
                                             >
                                                 {/* Admin is the mid */}
-                                                {admin}
+                                                {admin.name}
                                             </Typography>
                                         ))}
                                     </Box>

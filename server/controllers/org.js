@@ -22,7 +22,7 @@ exports.getOrg = async (req, res) => {
     try {
         const org = await OrgModel.findById(req.params.id).populate(
             'createdBy'
-        );
+        ).populate('admin').populate('members');
         if (!org) {
             res.status(404).json({
                 success: false,
