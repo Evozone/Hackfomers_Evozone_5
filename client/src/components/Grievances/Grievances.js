@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 // Material UI
@@ -17,12 +17,21 @@ import GrievanceList from './GrievanceList';
 import CreateGrievance from './CreateGrievance';
 
 import {
-    lMode1, lMode2, lMode3, lMode4, lMode5, lMode6,
-    dMode1, dMode2, dMode3, dMode4, dMode5, dMode6,
+    lMode1,
+    lMode2,
+    lMode3,
+    lMode4,
+    lMode5,
+    lMode6,
+    dMode1,
+    dMode2,
+    dMode3,
+    dMode4,
+    dMode5,
+    dMode6,
 } from '../../utils/colors';
 
 export default function Grievances({ themeChange, mode }) {
-
     const dispatch = useDispatch();
 
     // Can be 'createGrievance' or 'grievanceList'
@@ -34,14 +43,17 @@ export default function Grievances({ themeChange, mode }) {
         }
     };
 
+    useEffect(() => {
+        window.localStorage.setItem('hackathonAppLastPage', 'grievenaces');
+    }, []);
+
     return (
         <BarredPage mode={mode}>
-
             <ToggleButtonGroup
                 value={currentView}
                 exclusive
                 onChange={handleChangeView}
-                aria-label="grievance view"
+                aria-label='grievance view'
                 sx={{
                     mt: 3,
                     background: mode === 'light' ? lMode1 : dMode1,
@@ -55,12 +67,14 @@ export default function Grievances({ themeChange, mode }) {
                             background: mode === 'light' ? lMode4 : dMode4,
                             '&:hover': {
                                 background: mode === 'light' ? lMode2 : dMode2,
-                            }
+                            },
                         },
                     },
                 }}
             >
-                <ToggleButton value="createGrievance" aria-label="create grievance"
+                <ToggleButton
+                    value='createGrievance'
+                    aria-label='create grievance'
                 >
                     <Typography
                         textTransform='none'
@@ -72,9 +86,8 @@ export default function Grievances({ themeChange, mode }) {
                     >
                         <CreateIcon /> &nbsp; Create Grievance
                     </Typography>
-
                 </ToggleButton>
-                <ToggleButton value="grievanceList" aria-label="grievance list">
+                <ToggleButton value='grievanceList' aria-label='grievance list'>
                     <Typography
                         textTransform='none'
                         sx={{
@@ -93,7 +106,6 @@ export default function Grievances({ themeChange, mode }) {
             ) : (
                 <GrievanceList {...{ themeChange, mode }} />
             )}
-
         </BarredPage>
-    )
+    );
 }

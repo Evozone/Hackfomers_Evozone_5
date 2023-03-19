@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 // MUI  components
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 // Colors
 import {
-    lMode1, lMode2, lMode3, lMode4, lMode5, lMode6,
-    dMode1, dMode2, dMode3, dMode4, dMode5, dMode6
-} from '../../utils/colors'
+    lMode1,
+    lMode2,
+    lMode3,
+    lMode4,
+    lMode5,
+    lMode6,
+    dMode1,
+    dMode2,
+    dMode3,
+    dMode4,
+    dMode5,
+    dMode6,
+} from '../../utils/colors';
 
 export default function DashBoardContent({ mode, children }) {
     return (
@@ -30,6 +40,6 @@ export default function DashBoardContent({ mode, children }) {
             }}
         >
             {children}
-        </Box >
-    )
+        </Box>
+    );
 }
