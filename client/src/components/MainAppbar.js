@@ -167,7 +167,7 @@ function MainAppbar({ mode, themeChange }) {
                     font: '600 2.3rem Poppins, sans-serif',
                 }}
             >
-                | Resolva
+                || Resolva
             </Typography>
             {/* The rounded swticher thing */}
             <Box
