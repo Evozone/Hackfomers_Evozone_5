@@ -44,7 +44,7 @@ export default function Grievances({ themeChange, mode }) {
     };
 
     useEffect(() => {
-        window.localStorage.setItem('hackathonAppLastPage', 'grievenaces');
+        window.localStorage.setItem('hackathonAppLastPage', 'grievances');
     }, []);
 
     return (

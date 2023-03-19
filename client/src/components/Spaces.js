@@ -82,6 +82,7 @@ export default function Spaces({ themeChange, mode }) {
     }, []);
 
     useEffect(() => {
+        window.localStorage.setItem('hackathonAppLastPage', 'spaces');
         const getManagementToken = async () => {
             generateCoverImgURL();
             var managementToken = '';
