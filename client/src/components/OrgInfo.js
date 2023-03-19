@@ -190,7 +190,7 @@ export default function OrgInfo({ themeChange, mode }) {
                                         )}
                                     </Typography>
                                     <Typography
-                                        sx={{ wordBreak: 'break-all' }}
+                                        sx={{ wordBreak: 'break-word' }}
                                         gutterBottom
                                         variant='h6'
                                         component='div'

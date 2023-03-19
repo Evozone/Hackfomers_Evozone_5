@@ -50,6 +50,7 @@ export default function Grievance({ mode }) {
                 const { data } = await axios.get(
                     `${process.env.REACT_APP_SERVER_URL}/api/grievance/${id}`
                 );
+                console.log(data.result);
                 setGrievance(data.result);
             } catch (error) {
                 console.log(error);
@@ -87,7 +88,6 @@ export default function Grievance({ mode }) {
                 {/* Component for Main Greivance */}
 
                 <GrievanceThreadParent mode={mode} grievance={grievance} />
-
             </Box>
         </BarredPage>
     );

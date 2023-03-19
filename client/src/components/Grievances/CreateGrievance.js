@@ -56,7 +56,6 @@ export default function CreateGrievance({ mode }) {
 
     const [imgLocalURL, setImgLocalURL] = useState('');
     const [imageFile, setImageFile] = useState(null);
-    const [keywords, setKeywords] = useState([]);
     const [duplicate, setDuplicate] = useState(false);
     const [duplicateGrievances, setDuplicateGrievances] = useState([]);
 
@@ -97,7 +96,7 @@ export default function CreateGrievance({ mode }) {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (keywords) => {
         // Backend team handles the grievance code submission
 
         if (!grievance.title || !grievance.description || !grievance.location) {
@@ -129,7 +128,7 @@ export default function CreateGrievance({ mode }) {
             title: grievance.title,
             description: grievance.description,
             status: 'open',
-            keywords: keywords,
+            keywords,
             organization: orgId,
             createdBy: currentUser.mid,
             createdAt: Date.now().toString(),
@@ -180,16 +179,13 @@ export default function CreateGrievance({ mode }) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data[0].items);
-        setKeywords(data[0].items);
         return data[0].items;
     };
 
     const checkGrievance = async () => {
         if (grievance.description && grievance.location) {
+            dispatch(startLoadingAction());
             const keywords = await getKeywords();
-            console.log(keywords);
-
             const res = await axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_SERVER_URL}/api/grievance/check`,
@@ -202,13 +198,12 @@ export default function CreateGrievance({ mode }) {
                 },
             });
 
-            console.log(res.data);
-
             if (res.data.result?.length > 0) {
+                dispatch(stopLoadingAction());
                 setDuplicateGrievances(res.data.result);
                 setDuplicate(true);
             } else {
-                handleSubmit();
+                handleSubmit(keywords);
             }
         } else {
             alert('Please enter a description and location');
@@ -272,6 +267,8 @@ export default function CreateGrievance({ mode }) {
                 <StyledTextField
                     label='Description'
                     variant='outlined'
+                    multiline
+                    maxRows={5}
                     fullWidth
                     name='description'
                     value={grievance.description}
@@ -346,7 +343,6 @@ export default function CreateGrievance({ mode }) {
                     title='Create Grievance'
                     onClick={checkGrievance}
                 />
-
             </Box>
 
             {/* Duplicate Grievances */}

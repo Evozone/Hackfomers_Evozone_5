@@ -71,8 +71,13 @@ exports.getGrievance = async (req, res) => {
                 },
             })
             .populate('createdBy')
-            .populate('organization')
-            .populate('comments');
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'createdBy',
+                    model: 'User',
+                },
+            });
 
         if (!grievance) {
             res.status(404).json({
@@ -132,11 +137,14 @@ exports.checkGrievance = async (req, res) => {
             $or: keywords.map((word) => {
                 return {
                     keywords: {
-                        $elemMatch: { $regex: word.keyword, $options: 'i' },
+                        $elemMatch: {
+                            keyword: { $regex: word.keyword, $options: 'i' },
+                        },
                     },
                 };
             }),
         };
+        console.log(keyword, location);
         const grievances = await GrievanceModel.find(keyword)
             .find({
                 location,

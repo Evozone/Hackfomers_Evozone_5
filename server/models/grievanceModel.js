@@ -39,11 +39,7 @@ const grievanceSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        keywords: [
-            {
-                type: String,
-            },
-        ],
+        keywords: [],
         comments: [
             {
                 type: mongoose.Schema.Types.ObjectId,
