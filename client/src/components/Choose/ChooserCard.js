@@ -163,6 +163,7 @@ export default function ChooserCard({ mode }) {
                             {currentUser.organizations.map((org) => (
                                 <Box
                                     sx={{
+                                        key: org._id,
                                         display: 'grid',
                                         placeItems: 'center',
                                         textAlign: 'center',

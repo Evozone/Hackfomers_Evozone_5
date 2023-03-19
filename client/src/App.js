@@ -12,7 +12,6 @@ import Choose from './components/Choose/Choose';
 import Spaces from './components/Spaces';
 import Grievances from './components/Grievances/Grievances.js';
 import CreateGrievance from './components/Grievances/CreateGrievance';
-import Chat from './components/Chat';
 import Reports from './components/Reports';
 import MainAppbar from './components/MainAppbar';
 import CreateOrg from './components/Choose/CreateOrg'; //Changed
@@ -163,12 +162,6 @@ export default function App() {
                             mode={mode}
                         />
                     }
-                />
-
-                {/* Chat Page */}
-                <Route
-                    path='/chat'
-                    element={<Chat themeChange={themeChange} mode={mode} />}
                 />
 
                 {/* Reports Page */}
