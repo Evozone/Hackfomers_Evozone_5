@@ -35,6 +35,7 @@ export default function Reports({ themeChange, mode }) {
     });
     const [locationFilter, setLocationFilter] = useState('');
     const [filteredGrievances, setFilteredGrievances] = useState([]);
+    const [summarizedPoints, setSummarizedPoints] = useState([]);
 
     useEffect(() => {
         window.localStorage.setItem('hackathonAppLastPage', 'reports');
@@ -44,28 +45,32 @@ export default function Reports({ themeChange, mode }) {
     const filterGrievances = () => {
         // Call API with dateFilter and locationFilter as parameters
         // Update filteredGrievances state with the result
+        getReports();
     };
 
     const dispatch = useDispatch();
-    useEffect(() => {
-        const getReports = async () => {
-            dispatch(startLoadingAction());
-            try {
-                const resp = await axios.get(
-                    `${process.env.REACT_APP_SERVER_URL}/api/grievance/lastSevenDaysGrievance`
-                );
-                console.log(resp.data.result);
-                let description = resp.data.result.map((item) => {
-                    return item.description;
-                });
-                // convert array to string
+    // useEffect(() => {
+    //     getReports();
+    // }, []);
+
+    const getReports = async () => {
+        dispatch(startLoadingAction());
+        try {
+            console.log(locationFilter);
+            const resp = await axios.get(
+                `${process.env.REACT_APP_SERVER_URL}/api/grievance/lastSevenDaysGrievance/${locationFilter}`
+            );
+            console.log(resp.data.result);
+            let description = resp.data.result.map((item) => {
+                return item.description;
+            });
+            if (description.length !== 0) {
                 description = description.join(' -- ');
                 const input =
                     'Below is a list of grievances seperated by -- , give a small summary for each of them seperated by a hyphen (-) ' +
                     description;
 
                 console.log(input);
-                // return;
                 const options = {
                     method: 'POST',
                     headers: {
@@ -86,28 +91,20 @@ export default function Reports({ themeChange, mode }) {
 
                 fetch('https://api.edenai.run/v2/text/summarize', options)
                     .then((response) => response.json())
-                    .then((response) => console.log(response))
+                    .then((response) => {
+                        const points = response.openai.result;
+                        // make an array from points by taking - as the escape sequence
+                        const array = points.split('-').filter((x) => x);
+                        console.log(array);
+                        setSummarizedPoints(array);
+                        dispatch(stopLoadingAction());
+                    })
                     .catch((err) => console.error(err));
-                // const data = {
-                //     text: input,
-                // };
-                // const response = await axios.get(
-                //     `${process.env.REACT_APP_SERVER_URL}/api/grievance/generateSummary`,
-                //     {
-                //         headers: {
-                //             'content-type': 'application/json',
-                //         },
-                //         data,
-                //     }
-                // );
-                // console.log(response.data.result);
-            } catch (error) {
-                console.log(error);
             }
-            dispatch(stopLoadingAction());
-        };
-        getReports();
-    }, []);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <BarredPage mode={mode}>
@@ -238,37 +235,12 @@ export default function Reports({ themeChange, mode }) {
                     </Typography>
                     <Divider orientation='horizontal' sx={{ my: 2 }} />
                     {/* Put dummy letter */}
-                    Dear Sir/Madam,
+
                     <br />
-                    <br />
-                    I am writing to bring to your attention a grievance I have
-                    regarding the poor condition of the roads in my area. As a
-                    resident of Punjab, I have noticed that the roads are in a
-                    state of disrepair, with potholes and cracks that make
-                    driving and walking hazardous. This is especially
-                    problematic during the monsoon season when the potholes fill
-                    up with rainwater and become even more dangerous.
-                    <br />
-                    <br />
-                    I have tried contacting the local authorities several times
-                    but have received no response or action. This negligence has
-                    put the lives of myself and other residents in danger. I
-                    believe it is the responsibility of the government to ensure
-                    the safety of its citizens and maintain the roads in good
-                    condition.
-                    <br />
-                    <br />
-                    I urge you to take immediate action to repair the roads in
-                    my area and prevent any further accidents or injuries.
-                    <br />
-                    <br />
-                    Thank you for your attention to this matter.
-                    <br />
-                    <br />
-                    Sincerely,
-                    <br />
-                    [Your Name]
-                    <br />
+                    {summarizedPoints?.length > 0 &&
+                        summarizedPoints.map((points) => {
+                            return <Typography>{points}</Typography>;
+                        })}
                 </Card>
             </Box>
         </BarredPage>

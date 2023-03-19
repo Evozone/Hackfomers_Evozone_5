@@ -13,7 +13,7 @@ const {
 
 const auth = require('../middleware/auth.js');
 
-router.get('/lastSevenDaysGrievance', lastSevenDaysGrievance);
+router.get('/lastSevenDaysGrievance/:locationFilter', lastSevenDaysGrievance);
 // router.get('/generateSummary', generateSummary);
 router.get('/', getAllGrievances);
 router.get('/:id', getGrievance);

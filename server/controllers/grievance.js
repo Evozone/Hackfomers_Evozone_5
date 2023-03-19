@@ -243,13 +243,20 @@ exports.voteGrievance = async (req, res) => {
 
 exports.lastSevenDaysGrievance = async (req, res) => {
     const s = 7 * 24 * 60 * 60 * 1000;
+    const location = req.params.locationFilter;
+    console.log(location);
     try {
         console.log(Date.now() - s);
         const grievances = await GrievanceModel.find({
             createdAt: {
                 $gte: (Date.now() - s).toString(),
             },
+            location: {
+                $regex: new RegExp(location, 'i'),
+            },
         });
+
+        console.log('gr', grievances);
         res.status(200).json({
             success: true,
             result: grievances,
