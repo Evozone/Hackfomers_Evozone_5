@@ -235,188 +235,159 @@ export default function Spaces({ themeChange, mode }) {
     };
     return (
         <BarredPage mode={mode}>
-            <Typography
-                variant='h1'
-                component='h2'
-                sx={{
-                    color: 'mode' === 'light' ? dMode4 : lMode6,
-                    margin: '2rem',
-                    fontWeight: 'bold',
-                    fontSize: '3rem',
-                    textAlign: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                Support Groups
-                <RecordVoiceOverIcon
-                    sx={{ fontSize: '3rem', marginLeft: '1rem' }}
-                />
-            </Typography>
-
-            <Typography
-                variant='h2'
-                component='h3'
-                sx={{
-                    color:
-                        'mode' === 'light'
-                            ? dMode4.concat('aa')
-                            : lMode6.concat('aa'),
-                    margin: '2rem',
-                    fontFamily: 'Work Sans',
-                    fontWeight: 'dMode2',
-                    fontSize: '1.5rem',
-                    textAlign: 'center',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                Find a support group to talk about your mental health.
-            </Typography>
-
             <Box
                 sx={{
-                    display: 'grid',
-                    borderRadius: '10px',
-                    gridTemplateColumns: 'repeat(3, minmax(280px, 1fr))',
-                    gap: '24px 24px',
-                    gridAutoFlow: 'dense',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-start',
+                    width: '100%',
+                    p: 2,
                 }}
             >
-                {groups &&
-                    groups.map((space) => (
-                        <Card
-                            key={space.roomId}
-                            sx={{
-                                backgroundColor:
-                                    'mode' === 'light' ? dMode4 : 'black',
-                                color: 'mode' === 'light' ? lMode6 : dMode5,
-                                borderRadius: '10px',
-                                border:
-                                    'mode' === 'light'
-                                        ? 'none'
-                                        : `1px solid ${dMode5}`,
-                                height: '100%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <CardMedia
-                                image={space.cover}
+                {/* Page Title */}
+                <Typography
+                    sx={{
+                        m: 2,
+                        color: lMode6,
+                        font: '600 3rem Poppins, sans-serif',
+                    }}
+                >
+                    Spaces
+                </Typography>
+
+                {/* Page Subtitle */}
+                <Typography
+                    sx={{
+                        color:
+                            'mode' === 'light'
+                                ? dMode4.concat('aa')
+                                : lMode6.concat('aa'),
+                        m: 2,
+                        font: '400 1.5rem Work Sans, sans-serif',
+                    }}
+                >
+                    Find people to talk about common grievances
+                </Typography>
+
+
+                <Box
+                    sx={{
+                        p: 4,
+                        display: 'grid',
+                        borderRadius: '10px',
+                        gridTemplateColumns: 'repeat(3, minmax(280px, 1fr))',
+                        gap: '24px 24px',
+                        gridAutoFlow: 'dense',
+                    }}
+                >
+                    {groups &&
+                        groups.map((space) => (
+                            <Card
+                                key={space.roomId}
                                 sx={{
-                                    height: '200px',
+                                    backgroundColor: mode === 'light' ? lMode2 : dMode2,
+                                    color: 'mode' === 'light' ? lMode6 : dMode6,
+                                    borderRadius: '10px',
+                                    border: mode === 'light' ? '1px solid #e0e0e0' : '',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
                                 }}
-                            />
-                            <CardContent>
-                                <Typography
-                                    variant='h5'
+                            >
+                                <CardMedia
+                                    image={space.cover}
                                     sx={{
-                                        color:
-                                            'mode' === 'light'
-                                                ? lMode6
-                                                : dMode2,
-                                        font: '600 1.5rem/1.5rem Poppins, sans-serif',
-                                        mb: '0.5rem',
+                                        height: '200px',
                                     }}
-                                >
-                                    {space.title}
-                                </Typography>
-                                <Typography
-                                    variant='subtitle2'
-                                    color='textSecondary'
-                                    sx={{
-                                        m: 0,
-                                    }}
-                                >
-                                    by{' '}
-                                    {`${space.createdByUsername}  on   ${
-                                        space.createdAt.split('T')[0]
-                                    }`}
-                                </Typography>
-                                <Box
-                                    sx={{
-                                        height: '4rem',
-                                        overflow: 'hidden',
-                                    }}
-                                >
+                                />
+                                <CardContent>
                                     <Typography
-                                        variant='body1'
+                                        variant='h5'
                                         sx={{
-                                            font: '400 1rem/1.5rem Work Sans, sans-serif',
+                                            color:
+                                                'mode' === 'light'
+                                                    ? lMode6
+                                                    : dMode2,
+                                            font: '600 1.5rem/1.5rem Poppins, sans-serif',
+                                            mb: '0.5rem',
                                         }}
                                     >
-                                        {space.description}
+                                        {space.title}
                                     </Typography>
-                                </Box>
-                                <Button
-                                    disableElevation
-                                    color='success'
-                                    variant='contained'
-                                    sx={{
-                                        mt: 0,
-                                        backgroundColor:
-                                            'mode' === 'light'
-                                                ? dMode2
-                                                : lMode6,
-                                        color: 'black',
-                                        ':hover': {
-                                            backgroundColor: lMode6,
-                                            color: 'black',
-                                        },
-                                    }}
-                                    onClick={() => {
-                                        joinGroup(
-                                            space.roomId,
-                                            space.createdById
-                                        );
-                                    }}
-                                    endIcon={<PhoneInTalkIcon />}
-                                >
-                                    Join
-                                </Button>
-                                {space.createdById === currentUser.uid && (
-                                    <Button
-                                        sx={{ ml: 2 }}
-                                        disableElevation
-                                        variant='contained'
-                                        color='error'
-                                        endIcon={<DeleteIcon />}
-                                        onClick={() => {
-                                            deleteGroup(space._id);
+                                    <Typography
+                                        variant='subtitle2'
+                                        color='textSecondary'
+                                        sx={{
+                                            m: 0,
                                         }}
                                     >
-                                        Delete
+                                        by{' '}
+                                        {`${space.createdByUsername}  on   ${space.createdAt.split('T')[0]
+                                            }`}
+                                    </Typography>
+                                    <Box
+                                        sx={{
+                                            height: '4rem',
+                                            overflow: 'hidden',
+                                        }}
+                                    >
+                                        <Typography
+                                            variant='body1'
+                                            sx={{
+                                                font: '400 1rem/1.5rem Work Sans, sans-serif',
+                                                color: mode === 'light' ? lMode6 : dMode6,
+                                            }}
+                                        >
+                                            {space.description}
+                                        </Typography>
+                                    </Box>
+
+                                    <Button
+                                        disableElevation
+                                        color='success'
+                                        variant='contained'
+                                        sx={{
+                                            width: 'fit-content',
+                                            color: mode === 'light' ? lMode1 : dMode1,
+                                            background: mode === 'light' ? lMode6 : dMode6,
+                                            borderRadius: '10px',
+                                            boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.25)',
+                                            padding: '10px 20px',
+
+                                            '&:hover': {
+                                                background: mode === 'light' ? lMode3 : dMode3,
+                                            },
+                                        }}
+                                        onClick={() => {
+                                            joinGroup(
+                                                space.roomId,
+                                                space.createdById
+                                            );
+                                        }}
+                                        endIcon={<PhoneInTalkIcon />}
+                                    >
+                                        Join
                                     </Button>
-                                )}
-                                {/* <AvatarGroup max={4}>
-                                    <Avatar
-                                        alt='Remy Sharp'
-                                        src='/static/images/avatar/1.jpg'
-                                    />
-                                    <Avatar
-                                        alt='Travis Howard'
-                                        src='/static/images/avatar/2.jpg'
-                                    />
-                                    <Avatar
-                                        alt='Cindy Baker'
-                                        src='/static/images/avatar/3.jpg'
-                                    />
-                                    <Avatar
-                                        alt='Agnes Walker'
-                                        src='/static/images/avatar/4.jpg'
-                                    />
-                                    <Avatar
-                                        alt='Trevor Henderson'
-                                        src='/static/images/avatar/5.jpg'
-                                    />
-                                </AvatarGroup> */}
-                            </CardContent>
-                        </Card>
-                    ))}
+                                    {space.createdById === currentUser.uid && (
+                                        <Button
+                                            sx={{ ml: 2 }}
+                                            disableElevation
+                                            variant='contained'
+                                            color='error'
+                                            endIcon={<DeleteIcon />}
+                                            onClick={() => {
+                                                deleteGroup(space._id);
+                                            }}
+                                        >
+                                            Delete
+                                        </Button>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        ))}
+                </Box>
             </Box>
+
             <Modal open={modalVisible}>
                 <Box
                     sx={{
@@ -424,17 +395,19 @@ export default function Spaces({ themeChange, mode }) {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
+
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+
                         minWidth: 600,
                         maxHeight: '700px',
-                        backgroundColor: 'mode' === 'light' ? lMode6 : dMode4,
+                        backgroundColor: mode === 'light' ? lMode2 : dMode2,
                         boxShadow: 24,
                         borderRadius: '10px',
                         p: 2,
                         pb: 1,
                         border: 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        flexDirection: 'column',
                     }}
                 >
                     <CancelIcon
@@ -452,16 +425,20 @@ export default function Spaces({ themeChange, mode }) {
                             return;
                         }}
                     />
+                    {/* Modal Title */}
                     <Typography
                         variant='h4'
                         sx={{
                             textAlign: 'center',
                             mb: 3,
                             color: 'mode' === 'light' ? dMode4 : lMode6,
+                            font: '600 1.8rem Poppins, sans-serif',
                         }}
                     >
-                        Create New Group
+                        Create New Space
                     </Typography>
+
+                    {/* Modal Form */}
                     <form
                         onSubmit={createNewGroup}
                         style={{
@@ -470,8 +447,9 @@ export default function Spaces({ themeChange, mode }) {
                             width: '500px',
                         }}
                     >
+                        {/* For Title */}
                         <TextField
-                            color='success'
+                            color='primary'
                             fullWidth
                             required
                             id='outlined-required'
@@ -489,8 +467,9 @@ export default function Spaces({ themeChange, mode }) {
                                 },
                             }}
                         />
+                        {/* For Description */}
                         <TextField
-                            color='success'
+                            color='primary'
                             fullWidth
                             required
                             id='outlined-required'
@@ -508,6 +487,7 @@ export default function Spaces({ themeChange, mode }) {
                                 },
                             }}
                         />
+                        {/* For Cover Image */}
                         {coverImgURL && (
                             <img
                                 style={{
@@ -545,15 +525,17 @@ export default function Spaces({ themeChange, mode }) {
                             variant='contained'
                             disableElevation
                             sx={{
-                                mt: 1,
-                                mb: 1,
+                                width: 'fit-content',
+                                color: mode === 'light' ? lMode1 : dMode1,
+                                background: mode === 'light' ? lMode6 : dMode6,
+                                borderRadius: '10px',
+                                boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.25)',
+                                padding: '10px 20px',
+
                                 alignSelf: 'flex-end',
-                                backgroundColor:
-                                    'mode' === 'light' ? dMode2 : lMode6,
-                                color: 'black',
-                                ':hover': {
-                                    backgroundColor: dMode2,
-                                    color: 'black',
+
+                                '&:hover': {
+                                    background: mode === 'light' ? lMode3 : dMode3,
                                 },
                             }}
                             type='submit'
@@ -563,7 +545,9 @@ export default function Spaces({ themeChange, mode }) {
                     </form>
                 </Box>
             </Modal>
-            <Tooltip title='Create a new Group'>
+
+            {/* Tooltip to add new Space */}
+            <Tooltip title='Create a new Space  '>
                 <Fab
                     color='primary'
                     aria-label='add'
@@ -571,8 +555,8 @@ export default function Spaces({ themeChange, mode }) {
                         position: 'fixed',
                         bottom: '2rem',
                         right: '2rem',
-                        color: 'mode' === 'light' ? 'white' : dMode4,
-                        backgroundColor: 'mode' === 'light' ? dMode4 : lMode6,
+                        color: mode === 'light' ? lMode1 : dMode1,
+                        backgroundColor: mode === 'light' ? lMode6 : dMode6,
 
                         borderRadius: '50%',
                         height: '3.5rem',
@@ -585,8 +569,8 @@ export default function Spaces({ themeChange, mode }) {
                         boxShadow: '0 0 10px 0 rgba(78,135,140, 0.5)',
 
                         '&:hover': {
-                            backgroundColor: mode === 'dark' ? lMode6 : dMode4,
-                            color: mode === 'dark' ? dMode4 : lMode6,
+                            color: mode === 'light' ? lMode6 : dMode6,
+                            backgroundColor: mode === 'light' ? lMode2 : dMode2,
                             transform: 'scale(1.1) rotate(90deg)',
                             transition: 'transform 0.2s ease-in-out',
                         },
@@ -598,6 +582,7 @@ export default function Spaces({ themeChange, mode }) {
                     <AddIcon />
                 </Fab>
             </Tooltip>
+
         </BarredPage>
     );
 }

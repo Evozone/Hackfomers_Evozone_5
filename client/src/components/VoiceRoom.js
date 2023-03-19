@@ -70,7 +70,7 @@ function VoiceRoom({ mode }) {
         <Box
             sx={{
                 height: '100vh',
-                backgroundColor: mode === 'light' ? lMode6 : dMode3,
+                backgroundColor: mode === 'light' ? lMode1 : dMode1,
                 color: 'text.primary',
                 px: '5rem',
                 pt: '5rem',
@@ -82,7 +82,7 @@ function VoiceRoom({ mode }) {
             <Paper
                 sx={{
                     p: 2,
-                    backgroundColor: dMode4,
+                    backgroundColor: mode === 'light' ? lMode2 : dMode2,
                     height: 'calc(100vh - 170px)',
                     width: '100%',
                     mb: '1rem',
@@ -103,7 +103,7 @@ function VoiceRoom({ mode }) {
                 sx={{
                     p: 1,
                     borderRadius: '30px',
-                    backgroundColor: dMode4,
+                    backgroundColor: mode === 'light' ? lMode3 : dMode3,
                 }}
             >
                 <Stack direction='row' spacing={2}>
