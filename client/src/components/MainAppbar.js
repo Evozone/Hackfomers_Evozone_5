@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // MUI Components
 import Box from '@mui/material/Box';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import ForumIcon from '@mui/icons-material/Forum';
 import CommentIcon from '@mui/icons-material/Comment';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import Avatar from '@mui/material/Avatar';
@@ -70,7 +70,7 @@ function MainAppbar({ mode, themeChange }) {
         },
         {
             text: 'Grievances',
-            icon: <LibraryBooksIcon />,
+            icon: <ForumIcon />,
             value: 'grievances',
             onClick: () => {
                 handleMenuClose();
@@ -78,17 +78,8 @@ function MainAppbar({ mode, themeChange }) {
             },
         },
         {
-            text: 'Chat',
-            icon: <CommentIcon />,
-            value: 'chat',
-            onClick: () => {
-                handleMenuClose();
-                navigate('/chat');
-            },
-        },
-        {
             text: 'Reports',
-            icon: <PersonSearchIcon />,
+            icon: <AssessmentIcon />,
             value: 'reports',
             onClick: () => {
                 handleMenuClose();
