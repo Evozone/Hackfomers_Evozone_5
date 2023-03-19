@@ -123,22 +123,17 @@ export default function OrgInfo({ themeChange, mode }) {
                                     sx={{
                                         display: 'flex',
                                         flexDirection: 'row',
-                                        justifyContent:
-                                            'flex-start',
+                                        justifyContent: 'flex-start',
                                         alignItems: 'center',
                                         marginTop: '0.5rem',
                                     }}
                                 >
                                     <Avatar
                                         alt={orgInfo.createdBy.name}
-                                        src={
-                                            orgInfo.createdBy
-                                                .avatarURL
-                                        }
+                                        src={orgInfo.createdBy.avatarURL}
                                         sx={{
                                             marginRight: '0.5rem',
-                                            backgroundColor:
-                                                'white',
+                                            backgroundColor: 'white',
                                         }}
                                     />
 
@@ -190,7 +185,6 @@ export default function OrgInfo({ themeChange, mode }) {
                                     >
                                         {orgInfo.location}
                                     </Typography>
-
                                 </Box>
                             )}
 
@@ -208,7 +202,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                 {/* About section */}
                                 <Typography
                                     sx={{
-                                        color: mode === 'light' ? 'black' : 'white',
+                                        color:
+                                            mode === 'light'
+                                                ? 'black'
+                                                : 'white',
                                         font: '500 1.5rem Work Sans, sans-serif',
                                         p: 5,
                                         pt: 0,
@@ -231,7 +228,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                             p: 4,
                                             m: 2,
                                             font: '500 1rem Work Sans, sans-serif',
-                                            border: mode === 'light' ? `2px dashed ${lMode3}` : `2px dashed ${dMode3}`,
+                                            border:
+                                                mode === 'light'
+                                                    ? `2px dashed ${lMode3}`
+                                                    : `2px dashed ${dMode3}`,
                                             borderRadius: '20px',
                                             display: 'flex',
                                             flexDirection: 'row',
@@ -240,11 +240,15 @@ export default function OrgInfo({ themeChange, mode }) {
                                     >
                                         <Typography
                                             sx={{
-                                                color: mode === 'light' ? lMode6 : dMode6,
+                                                color:
+                                                    mode === 'light'
+                                                        ? lMode6
+                                                        : dMode6,
                                                 font: '500 1.5rem Work Sans, sans-serif',
                                             }}
                                         >
-                                            <b>Organization Code:</b> {orgInfo._id}
+                                            <b>Organization Code:</b>{' '}
+                                            {orgInfo._id}
                                         </Typography>
                                         <Button
                                             sx={{
@@ -262,7 +266,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                             p: 4,
                                             m: 2,
                                             font: '500 1rem Work Sans, sans-serif',
-                                            border: mode === 'light' ? `2px dashed ${lMode3}` : `2px dashed ${dMode3}`,
+                                            border:
+                                                mode === 'light'
+                                                    ? `2px dashed ${lMode3}`
+                                                    : `2px dashed ${dMode3}`,
                                             borderRadius: '20px',
                                             display: 'flex',
                                             flexDirection: 'row',
@@ -271,7 +278,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                     >
                                         <Typography
                                             sx={{
-                                                color: mode === 'light' ? lMode6 : dMode6,
+                                                color:
+                                                    mode === 'light'
+                                                        ? lMode6
+                                                        : dMode6,
                                                 font: '500 1.5rem Work Sans, sans-serif',
                                             }}
                                         >
@@ -282,7 +292,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                             <Typography
                                                 key={admin}
                                                 sx={{
-                                                    color: mode === 'light' ? lMode6 : dMode6,
+                                                    color:
+                                                        mode === 'light'
+                                                            ? lMode6
+                                                            : dMode6,
                                                     font: '500 1.5rem Work Sans, sans-serif',
                                                 }}
                                             >
@@ -290,7 +303,6 @@ export default function OrgInfo({ themeChange, mode }) {
                                                 {admin}
                                             </Typography>
                                         ))}
-
                                     </Box>
 
                                     <Box
@@ -298,7 +310,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                             p: 4,
                                             m: 2,
                                             font: '500 1rem Work Sans, sans-serif',
-                                            border: mode === 'light' ? `2px dashed ${lMode3}` : `2px dashed ${dMode3}`,
+                                            border:
+                                                mode === 'light'
+                                                    ? `2px dashed ${lMode3}`
+                                                    : `2px dashed ${dMode3}`,
                                             borderRadius: '20px',
                                             display: 'flex',
                                             flexDirection: 'row',
@@ -307,7 +322,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                     >
                                         <Typography
                                             sx={{
-                                                color: mode === 'light' ? lMode6 : dMode6,
+                                                color:
+                                                    mode === 'light'
+                                                        ? lMode6
+                                                        : dMode6,
                                                 font: '500 1.5rem Work Sans, sans-serif',
                                             }}
                                         >
@@ -320,7 +338,10 @@ export default function OrgInfo({ themeChange, mode }) {
                                             p: 4,
                                             m: 2,
                                             font: '500 1rem Work Sans, sans-serif',
-                                            border: mode === 'light' ? `2px dashed ${lMode3}` : `2px dashed ${dMode3}`,
+                                            border:
+                                                mode === 'light'
+                                                    ? `2px dashed ${lMode3}`
+                                                    : `2px dashed ${dMode3}`,
                                             borderRadius: '20px',
                                             display: 'flex',
                                             flexDirection: 'row',
@@ -329,24 +350,25 @@ export default function OrgInfo({ themeChange, mode }) {
                                     >
                                         <Typography
                                             sx={{
-                                                color: mode === 'light' ? lMode6 : dMode6,
+                                                color:
+                                                    mode === 'light'
+                                                        ? lMode6
+                                                        : dMode6,
                                                 font: '500 1.5rem Work Sans, sans-serif',
                                             }}
                                         >
-                                            <b> Grievances :</b> {orgInfo.grievances?.length}
+                                            <b> Grievances :</b>{' '}
+                                            {orgInfo.grievances?.length}
                                         </Typography>
                                     </Box>
                                 </Box>
-
                             </Box>
-
 
                             {/* Info end */}
                         </CardContent>
                     </Card>
                 )}
-
             </Box>
-        </BarredPage >
+        </BarredPage>
     );
 }

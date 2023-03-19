@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -24,6 +26,7 @@ import {
     dMode6,
 } from '../../utils/colors';
 import CommentForm from './CommentForm';
+import { startLoadingAction, stopLoadingAction } from '../../actions/actions';
 
 export default function GrievanceThreadParent({
     themeChange,
@@ -31,16 +34,34 @@ export default function GrievanceThreadParent({
     grievance,
 }) {
     const [imageModal, setImagEmodal] = useState(false);
-
+    const dispatch = useDispatch();
     const [vote, setVote] = useState(0);
 
+    useEffect(() => {
+        setVote(grievance.votes);
+    }, [grievance.votes]);
+
     // Function to handle vote change
-    const handleVoteChange = (type) => () => {
+    const handleVoteChange = async (type) => {
         if (type === 'upvote') {
             setVote(vote + 1);
         } else {
             setVote(vote - 1);
         }
+        const data = {
+            id: grievance._id,
+            type,
+        };
+        dispatch(startLoadingAction());
+        await axios({
+            method: 'PATCH',
+            url: `${process.env.REACT_APP_SERVER_URL}/api/grievance/vote`,
+            data,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        dispatch(stopLoadingAction());
     };
 
     const toggleImageModal = () => {
@@ -213,7 +234,7 @@ export default function GrievanceThreadParent({
                 </Box>
                 {/* Empty space */}
                 <Box sx={{ flexGrow: 1 }}></Box>
-                Create a Grievance
+
                 {/* Upvotes */}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton
@@ -239,7 +260,7 @@ export default function GrievanceThreadParent({
                             mx: 1,
                         }}
                     >
-                        {grievance.votes}
+                        {vote}
                     </Typography>
 
                     <IconButton

@@ -179,6 +179,7 @@ export default function CreateGrievance({ mode }) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data);
         return data[0].items;
     };
 

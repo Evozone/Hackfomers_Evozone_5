@@ -1,6 +1,11 @@
 const GrievanceModel = require('../models/grievanceModel');
 const UserModel = require('../models/userModel');
 const OrgModel = require('../models/orgModel');
+const { Configuration, OpenAIApi } = require('openai');
+
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+});
 
 // @route   POST /grievance/create
 // @desc    Create a grievance
@@ -130,6 +135,34 @@ exports.getAllGrievances = async (req, res) => {
     }
 };
 
+// exports.generateSummary = async (req, res) => {
+//     try {
+//         const { text } = req.body;
+//         const openai = new OpenAIApi(configuration);
+//         const response = await openai.createCompletion({
+//             model: 'text-davinci-003',
+//             prompt: text,
+//             temperature: 0.7,
+//             max_tokens: 60,
+//             top_p: 1.0,
+//             frequency_penalty: 0.0,
+//             presence_penalty: 1,
+//         });
+//         res.status(200).json({
+//             success: true,
+//             result: response.data.choices[0].text,
+//             message: 'Grievances found',
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             success: false,
+//             message: 'Something went wrong',
+//             error: error.message,
+//         });
+//         console.log(error);
+//     }
+// };
+
 exports.checkGrievance = async (req, res) => {
     try {
         const { location, keywords } = req.body;
@@ -152,6 +185,71 @@ exports.checkGrievance = async (req, res) => {
             .populate('organization')
             .populate('createdBy')
             .populate('comments');
+        res.status(200).json({
+            success: true,
+            result: grievances,
+            message: 'Grievances found',
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong',
+            error: error.message,
+        });
+        console.log(error);
+    }
+};
+
+exports.voteGrievance = async (req, res) => {
+    try {
+        const { type, id } = req.body;
+        let grievance = '';
+        console.log(type, id);
+        if (type === 'upvote') {
+            grievance = await GrievanceModel.findByIdAndUpdate(
+                id,
+                {
+                    $inc: { votes: 1 },
+                },
+                {
+                    new: true,
+                }
+            );
+        } else {
+            grievance = await GrievanceModel.findByIdAndUpdate(
+                id,
+                {
+                    $inc: { votes: -1 },
+                },
+                {
+                    new: true,
+                }
+            );
+        }
+        res.status(200).json({
+            success: true,
+            result: grievance,
+            message: 'Grievance voted',
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong',
+            error: error.message,
+        });
+        console.log(error);
+    }
+};
+
+exports.lastSevenDaysGrievance = async (req, res) => {
+    const s = 7 * 24 * 60 * 60 * 1000;
+    try {
+        console.log(Date.now() - s);
+        const grievances = await GrievanceModel.find({
+            createdAt: {
+                $gte: (Date.now() - s).toString(),
+            },
+        });
         res.status(200).json({
             success: true,
             result: grievances,
