@@ -53,6 +53,7 @@ export default function CreateGrievance({ mode }) {
         votes: 0,
         comments: [],
     });
+
     const [imgLocalURL, setImgLocalURL] = useState('');
     const [imageFile, setImageFile] = useState(null);
     const [keywords, setKeywords] = useState([]);
@@ -106,15 +107,6 @@ export default function CreateGrievance({ mode }) {
         dispatch(startLoadingAction());
         // Generate a unique id for the grievance
         const uid = uuid();
-
-        // setGrievance((prevGrievance) => ({
-        //     ...prevGrievance,
-        //     uid: uid,
-        //     createdBy: currentUser.mid,
-        //     createdAt: Date.now().toString(),
-        //     status: 'open',
-        //     organization: 'Put something here Vishal',
-        // }));
 
         const orgId = JSON.parse(window.localStorage.getItem('organizationId'));
 
@@ -197,6 +189,7 @@ export default function CreateGrievance({ mode }) {
         if (grievance.description && grievance.location) {
             const keywords = await getKeywords();
             console.log(keywords);
+
             const res = await axios({
                 method: 'POST',
                 url: `${process.env.REACT_APP_SERVER_URL}/api/grievance/check`,
@@ -208,7 +201,9 @@ export default function CreateGrievance({ mode }) {
                     keywords,
                 },
             });
+
             console.log(res.data);
+
             if (res.data.result?.length > 0) {
                 setDuplicateGrievances(res.data.result);
                 setDuplicate(true);
@@ -230,6 +225,7 @@ export default function CreateGrievance({ mode }) {
                 p: 2,
             }}
         >
+            {/* Page Title */}
             <Typography
                 sx={{
                     margin: '2vh',
@@ -240,6 +236,7 @@ export default function CreateGrievance({ mode }) {
                 Create a Grievance
             </Typography>
 
+            {/* Grievance Form */}
             <Box
                 sx={{
                     p: 5,
@@ -250,6 +247,7 @@ export default function CreateGrievance({ mode }) {
                     backgroundColor: mode === 'light' ? lMode2 : dMode2,
                 }}
             >
+                {/* Form Title */}
                 <Typography
                     sx={{
                         font: '500 1.5rem Work Sans, sans-serif',
@@ -260,6 +258,7 @@ export default function CreateGrievance({ mode }) {
                     Fill in the details of your grievance
                 </Typography>
 
+                {/* Input Title */}
                 <StyledTextField
                     label='Title'
                     variant='outlined'
@@ -269,6 +268,7 @@ export default function CreateGrievance({ mode }) {
                     onChange={handleInputChange}
                 />
 
+                {/* Input Description */}
                 <StyledTextField
                     label='Description'
                     variant='outlined'
@@ -278,6 +278,7 @@ export default function CreateGrievance({ mode }) {
                     onChange={handleInputChange}
                 />
 
+                {/* Input Location */}
                 <StyledTextField
                     label='Location'
                     variant='outlined'
@@ -315,6 +316,7 @@ export default function CreateGrievance({ mode }) {
 
                 <Divider sx={{ mt: '2px', width: '100%' }} />
 
+                {/* Select Image */}
                 <input
                     accept='image/*'
                     id='sendImage'
@@ -322,6 +324,8 @@ export default function CreateGrievance({ mode }) {
                     style={{ display: 'none' }}
                     onChange={handleImageInput}
                 />
+
+                {/* Select Image */}
                 <IconButton sx={{ ml: 1, pb: '4px' }}>
                     <label htmlFor='sendImage'>
                         <Tooltip title='Select an Image'>
@@ -336,12 +340,16 @@ export default function CreateGrievance({ mode }) {
                     </label>
                 </IconButton>
 
+                {/* Submit Button */}
                 <ConsistentButton
                     mode={mode}
                     title='Create Grievance'
                     onClick={checkGrievance}
                 />
+
             </Box>
+
+            {/* Duplicate Grievances */}
             {duplicate && (
                 <Box
                     sx={{

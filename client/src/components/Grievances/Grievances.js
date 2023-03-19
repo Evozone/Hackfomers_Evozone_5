@@ -26,7 +26,7 @@ export default function Grievances({ themeChange, mode }) {
     const dispatch = useDispatch();
 
     // Can be 'createGrievance' or 'grievanceList'
-    const [currentView, setCurrentView] = useState('createGrievance');
+    const [currentView, setCurrentView] = useState('grievanceList');
 
     const handleChangeView = (event, newView) => {
         if (newView !== null) {

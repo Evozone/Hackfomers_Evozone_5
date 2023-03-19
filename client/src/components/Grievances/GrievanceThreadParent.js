@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 // Material UI
 import Typography from '@mui/material/Typography';
@@ -17,10 +17,16 @@ import {
 
 export default function GrievanceThreadParent({ themeChange, mode, grievance }) {
 
-    const handleVoteChange = async (voteType) => {
-        // TODO: Chinu to implement this
-        console.log(voteType);
-    };
+    const [vote, setVote] = useState(0);
+
+    // Function to handle vote change
+    const handleVoteChange = (type) => () => {
+        if (type === 'upvote') {
+            setVote(vote + 1);
+        } else {
+            setVote(vote - 1);
+        }
+    }
 
     return (
         <Box
@@ -76,10 +82,24 @@ export default function GrievanceThreadParent({ themeChange, mode, grievance }) 
 
                     <Typography
                         variant='subtitle1'
-                        sx={{ color: mode === 'light' ? lMode6 : dMode6 }}
+                        sx={{ color: mode === 'light' ? lMode6 : dMode6, marginRight: '0.5rem', }}
                     >
                         {grievance.createdBy.name}
                     </Typography>
+
+                    <Divider orientation='vertical' sx={{
+                        height: '2rem',
+                        mr: 1,
+                        backgroundColor: mode === 'light' ? lMode3 : dMode3,
+                    }} />
+
+                    <Typography
+                        variant='subtitle1'
+                        sx={{ color: mode === 'light' ? lMode6 : dMode6 }}
+                    >
+                        in {grievance.location}
+                    </Typography>
+
                 </Box>
             )}
 
